@@ -2,8 +2,9 @@
 
 """contains transpose function"""
 
+
 def matrix_transpose(matrix):
-    # return matrix transposed
+    """return matrix transposed"""
     rowLength = len(matrix[0])
     trans_mat = []
 
