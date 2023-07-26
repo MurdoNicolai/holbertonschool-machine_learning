@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+"""return the shape of the matrix"""
 
 
 def matrix_shape(matrix):
-    # return the shape of the matrix
+    """return the shape of the matrix"""
     elem = matrix
     size = []
     while type(elem) is list:
