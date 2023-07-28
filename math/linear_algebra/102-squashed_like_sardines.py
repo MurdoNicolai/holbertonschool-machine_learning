@@ -5,11 +5,7 @@
 def cat_matrices(mat1, mat2, axis=0):
     """concatenate matrices along the axis specified"""
     result = []
-    if mat1 is not list or mat2 is not list:
-        return 0
     if axis == 0:
-        if cat_matrices(mat1[0], mat2[0], axis - 1) is None:
-            return None
         for row_nb in range(len(mat1)):
             result.append(mat1[row_nb])
         for row_nb in range(len(mat2)):
