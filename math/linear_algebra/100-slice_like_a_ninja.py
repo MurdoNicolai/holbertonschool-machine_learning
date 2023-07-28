@@ -17,6 +17,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d0 = slice(start, stop, step)
@@ -28,6 +31,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d1 = slice(start, stop, step)
@@ -39,6 +45,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d2 = slice(start, stop, step)
@@ -50,6 +59,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d3 = slice(start, stop, step)
@@ -61,6 +73,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d4 = slice(start, stop, step)
@@ -72,6 +87,9 @@ def np_slice(matrix, axes={}):
             start = axes[key][0]
         if len(axes[key]) > 1:
             stop = axes[key][1]
+        else:
+            stop = axes[key][0]
+            start = 0
         if len(axes[key]) > 2:
             step = axes[key][2]
     d5 = slice(start, stop, step)
@@ -117,4 +135,3 @@ def np_slice(matrix, axes={}):
     # matrix = np.array(temp_matrix)
 
     # return matrix
-
