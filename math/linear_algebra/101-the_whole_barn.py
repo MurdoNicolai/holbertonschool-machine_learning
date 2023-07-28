@@ -8,7 +8,7 @@ def add_matrices(mat1, mat2):
        and (type(mat2) is int or type(mat2) is float)):
         return mat1 + mat2
 
-    elif isinstance(mat1, list) or isinstance(mat1, list):
+    elif not isinstance(mat1, list) or not isinstance(mat1, list):
         return None
 
     if len(mat1) != len(mat2):
