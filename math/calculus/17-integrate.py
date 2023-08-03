@@ -4,7 +4,7 @@ def poly_integral(poly, C=0):
     new_poly = []
     position = len(poly) + 1
     for value in poly:
-        if type(value) is not int or type(value) is not float:
+        if type(value) is not int and type(value) is not float:
             return None
         new_poly.append(value / position)
         position -= 1
