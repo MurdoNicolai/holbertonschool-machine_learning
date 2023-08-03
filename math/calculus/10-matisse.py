@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 def poly_derivative(poly):
     """Compute the derivative of a polynomial distribution"""
     new_poly = []

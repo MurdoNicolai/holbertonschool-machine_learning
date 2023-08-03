@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 def poly_integral(poly, C=0):
     """Returns the integral of the given polynomial"""
     new_poly = []

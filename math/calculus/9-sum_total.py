@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 def summation_i_squared(n):
     """Returns the summation"""
     if n < 1:
