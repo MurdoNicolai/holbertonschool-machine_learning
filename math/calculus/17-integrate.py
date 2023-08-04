@@ -21,4 +21,6 @@ def poly_integral(poly, C=0):
     for pos in range(len(new_poly)-1, 0, -1):
         if new_poly[pos] == 0:
             new_poly.pop()
+        else:
+            break
     return new_poly
