@@ -15,5 +15,6 @@ def poly_derivative(poly):
             return None
         new_poly.append(value * position)
         position += 1
-    if new_poly == []:new_poly = [0]
+    if new_poly == []:
+        new_poly = [0]
     return new_poly

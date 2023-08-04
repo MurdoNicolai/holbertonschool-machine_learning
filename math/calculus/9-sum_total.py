@@ -9,5 +9,5 @@ def summation_i_squared(n):
     if n == 1:
         return 1
     a = summation_i_squared(n - 1)
-    a= a + n * n
+    a = a + n * n
     return a

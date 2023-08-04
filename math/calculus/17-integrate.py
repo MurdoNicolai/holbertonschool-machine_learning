@@ -5,7 +5,7 @@
 def poly_integral(poly, C=0):
     """Returns the integral of the given polynomial"""
     new_poly = [C]
-    position =  1
+    position = 1
     if type(poly) is not list:
         return None
     if len(poly) == 0 or type(C) is not int:
@@ -14,7 +14,7 @@ def poly_integral(poly, C=0):
         if type(value) is not int and type(value) is not float:
             return type(value)
         result = value / position
-        if result%1 == 0:
+        if result % 1 == 0:
             result = int(result)
         new_poly.append(result)
         position += 1
