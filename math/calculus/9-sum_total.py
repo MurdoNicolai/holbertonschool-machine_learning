@@ -8,6 +8,5 @@ def summation_i_squared(n):
         return None
     if n == 1:
         return 1
-    a = summation_i_squared(n - 1)
-    a = a + n * n
-    return a
+    # https://en.wikipedia.org/wiki/List_of_mathematical_series#Sums_of_powers
+    return n * n * n / 3 + n * n / 2 + n / 6
