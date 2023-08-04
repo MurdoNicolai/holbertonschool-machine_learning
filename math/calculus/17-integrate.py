@@ -6,6 +6,10 @@ def poly_integral(poly, C=0):
     """Returns the integral of the given polynomial"""
     new_poly = [C]
     position =  1
+    if type(poly) is not list:
+        return None
+    if len(poly) == 0 or type(C) is not int:
+        return None
     for value in poly:
         if type(value) is not int and type(value) is not float:
             return type(value)
