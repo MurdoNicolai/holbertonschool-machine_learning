@@ -18,4 +18,7 @@ def poly_integral(poly, C=0):
             result = int(result)
         new_poly.append(result)
         position += 1
+    for pos in range(len(new_poly)-1, 0, -1):
+        if new_poly[pos] == 0:
+            new_poly.pop()
     return new_poly
