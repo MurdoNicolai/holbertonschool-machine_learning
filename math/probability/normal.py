@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """contains Normal class"""
-import math
 
 
 def π():
@@ -33,7 +32,7 @@ def stddeviation(list):
     sum = 0
     for num in list:
         sum += (num - mean)*(num - mean)
-    return math.sqrt(sum/len(list))
+    return sum/len(list)**(1/2)
 
 
 def factorial(num):
