@@ -66,6 +66,7 @@ class Poisson():
         """calc the pmf given the amount of successes"""
         if type(k) is not int:
             k = int(k)
-
+        if k <= 0:
+            return 0
         return (pow(e(), (-1) * self.lambtha) * pow(self.lambtha, k)
                 / factorial(k))
