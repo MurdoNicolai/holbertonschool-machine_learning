@@ -35,6 +35,14 @@ def varience(list):
     return sum/len(list)
 
 
+def factorial(num):
+    """returns the factorial ofnum"""
+    result = 1
+    for i in range(num):
+        result *= i+1
+    return result
+
+
 class Poisson():
     """class representing the Poisson distribution"""
     def __init__(self, data=None, lambtha=1.):
@@ -53,3 +61,11 @@ class Poisson():
                 raise ValueError("data must contain multiple values")
             else:
                 self.lambtha = average(data)
+
+    def pmf(self, k):
+        """calc the pmf given the amount of successes"""
+        if type(k) is not int:
+            k = int(k)
+
+        return (pow(e(), (-1) * self.lambtha) * pow(self.lambtha, k)
+                / factorial(k))
