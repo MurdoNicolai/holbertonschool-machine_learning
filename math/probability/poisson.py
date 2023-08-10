@@ -78,6 +78,6 @@ class Poisson():
         if k <= 0:
             return 0
         result = 0
-        for n in range(k):
+        for n in range(k + 1):
             result += self.pmf(n)
         return result
