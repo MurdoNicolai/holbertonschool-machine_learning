@@ -32,7 +32,7 @@ def stddeviation(list):
     sum = 0
     for num in list:
         sum += (num - mean)*(num - mean)
-    return sum/len(list)**(1/2)
+    return ((sum/len(list))**(1/2))
 
 
 def factorial(num):
