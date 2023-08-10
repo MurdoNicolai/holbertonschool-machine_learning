@@ -3,17 +3,17 @@
 
 
 def π():
-    """pi"""
+    """return aprox pi"""
     return (3.1415926536)
 
 
 def e():
-    """e"""
+    """return aprox e"""
     return(2.7182818285)
 
 
 def erf(x):
-    """erf(x)"""
+    """return aprox erf(x)"""
     return((2/1.77245385091) *
            (x-x*x*x/3+x*x*x*x*x/10-x*x*x*x*x*x*x/42+x*x*x*x*x*x*x*x*x/216))
 
