@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""contains poisson class"""
+"""contains Exponential class"""
 
 
 def π():
@@ -44,7 +44,7 @@ def factorial(num):
 
 
 class Exponential():
-    """class representing the Poisson distribution"""
+    """class representing the Exponential distribution"""
     def __init__(self, data=None, lambtha=1.):
         """data is list of data to estimate distribution
         lambtha is expect number of occurences:
