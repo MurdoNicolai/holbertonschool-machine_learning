@@ -68,8 +68,10 @@ class Normal():
         """calc the pmf given the amount of successes"""
         if k < 0:
             return 0
-        return ((1/(self.stddev*(2*π())**(1/2)))*pow(e(), (-1/2)
-                * ((k-self.mean)/self.stddev)**2))
+        p1 = 1/(self.stddev*(2*π())**(1/2))
+        p2 = ((k-self.mean)/self.stddev)**2
+        p3 = pow(e(), p2/2)
+        return p1/p3
 
     def cdf(self, k):
         """calc the cdf given the amount of successes"""
