@@ -71,5 +71,5 @@ class Exponential():
     def cdf(self, k):
         """calc the pmf given the amount of successes"""
         if k <= 0:
-            return 0
+            return 0.0
         return (1 - 1 / pow(e(), self.lambtha * k))
