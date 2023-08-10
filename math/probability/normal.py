@@ -68,7 +68,8 @@ class Normal():
         """calc the pmf given the amount of successes"""
         if k < 0:
             return 0
-        return (self.lambtha / pow(e(), self.lambtha * k))
+        return ((1/(self.stddev*(2*π())**(1/2)))*pow(e(), (-1/2)
+                * ((k-self.mean)/self.stddev)**2))
 
     def cdf(self, k):
         """calc the cdf given the amount of successes"""
@@ -76,7 +77,7 @@ class Normal():
             return 0.0
         if k < 0:
             return 0
-        return (1 - 1 / pow(e(), self.lambtha * k))
+        return ((1 + erf((k-self.mean)/(self.stddev*(2**(1/2)))))/2)
 
     def z_score(self, x):
         """calc the z-scores"""
