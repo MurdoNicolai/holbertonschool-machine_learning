@@ -66,10 +66,12 @@ class Poisson():
         """calc the pmf given the amount of successes"""
         if type(k) is not int:
             k = int(k)
-        if k <= 0:
+        if k < 0:
             return 0
-        return (pow(e(), (-1) * self.lambtha) * pow(self.lambtha, k)
-                / factorial(k))
+        result = 1
+        for i in range(1, k + 1):
+            result *= self.lambtha / i
+        return (result / pow(e(), self.lambtha))
 
     def cdf(self, k):
         """calc the pmf given the amount of successes"""
