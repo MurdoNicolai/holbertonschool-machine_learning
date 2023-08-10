@@ -70,3 +70,14 @@ class Poisson():
             return 0
         return (pow(e(), (-1) * self.lambtha) * pow(self.lambtha, k)
                 / factorial(k))
+
+    def cdf(self, k):
+        """calc the pmf given the amount of successes"""
+        if type(k) is not int:
+            k = int(k)
+        if k <= 0:
+            return 0
+        result = 0
+        for n in range(k):
+            result += self.pmf(n)
+        return result
