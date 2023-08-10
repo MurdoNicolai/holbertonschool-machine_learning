@@ -34,6 +34,6 @@ class Poisson():
             if type(data) is not list:
                 raise TypeError("data must be a list")
             elif len(data) <= 2:
-                raise ValueError("data must contain at multiple values")
+                raise ValueError("data must contain multiple values")
             else:
-                lambtha = varience(data)
+                self.lambtha = varience(data)
