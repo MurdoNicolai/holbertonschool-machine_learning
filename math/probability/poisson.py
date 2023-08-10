@@ -2,6 +2,22 @@
 """contains poisson class"""
 
 
+def π():
+    """pi"""
+    return (3.1415926536)
+
+
+def e():
+    """e"""
+    return(2.7182818285)
+
+
+def erf(x):
+    """erf(x)"""
+    return((2/1.77245385091) *
+           (x-x*x*x/3+x*x*x*x*x/10-x*x*x*x*x*x*x/42+x*x*x*x*x*x*x*x*x/216))
+
+
 def average(list):
     """returns the average of list"""
     sum = 0
@@ -36,4 +52,4 @@ class Poisson():
             elif len(data) <= 2:
                 raise ValueError("data must contain multiple values")
             else:
-                self.lambtha = varience(data)
+                self.lambtha = average(data)
