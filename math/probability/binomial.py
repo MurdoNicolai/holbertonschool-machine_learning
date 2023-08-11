@@ -50,9 +50,9 @@ class Binomial():
         stddev is expect number of occurences:
         sets stddev"""
         if data is None:
-            if n < 0:
+            if n <= 0:
                 raise ValueError("n must be a positive value")
-            if p < 0 or p > 1:
+            if p <= 0 or p >= 1:
                 raise ValueError("p must be greater than 0 and less than 1")
             else:
                 self.p = float(p)
@@ -71,7 +71,7 @@ class Binomial():
         """calc the pmf given the amount of successes"""
         if type(k) is not int:
             k = int(k)
-        if k <= 0:
+        if k < 0:
             return 0
         p1 = factorial(self.n)/(factorial(k)*factorial(self.n-k))
         p2 = pow(self.p, k)*pow(1-self.p, self.n-k)
@@ -81,7 +81,7 @@ class Binomial():
         """calc the cdf given the amount of successes"""
         if type(k) is not int:
             k = int(k)
-        if k <= 0:
+        if k < 0:
             return 0
         result = 0
         for n in range(k + 1):
