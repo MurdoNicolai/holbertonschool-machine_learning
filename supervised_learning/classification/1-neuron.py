@@ -25,10 +25,12 @@ class Neuron():
     def W(self):
         """I'm the 'W' property."""
         return self._W
+
     @property
     def b(self):
         """I'm the 'b' property."""
         return self._b
+
     @property
     def A(self):
         """I'm the 'A' property."""
