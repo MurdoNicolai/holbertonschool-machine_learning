@@ -20,3 +20,16 @@ class Neuron():
             self._W = np.random.randn(1, nx)
             self._b = 0
             self._A = 0
+
+    @property
+    def W(self):
+        """I'm the 'W' property."""
+        return self._W
+    @property
+    def b(self):
+        """I'm the 'b' property."""
+        return self._b
+    @property
+    def A(self):
+        """I'm the 'A' property."""
+        return self._A
