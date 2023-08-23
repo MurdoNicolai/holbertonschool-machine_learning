@@ -17,26 +17,27 @@ class Neuron():
         elif nx < 1:
             raise ValueError("nx must be a positive integer")
         else:
-            self._W = np.random.randn(1, nx)
-            self._b = 0
-            self._A = 0
+            self.__W = np.random.randn(1, nx)
+            self.__b = 0
+            self.__A = 0
 
     @property
     def W(self):
         """I'm the 'W' property."""
-        return self._W
+        return self.__W
 
     @property
     def b(self):
         """I'm the 'b' property."""
-        return self._b
+        return self.__b
 
     @property
     def A(self):
         """I'm the 'A' property."""
-        return self._A
+        return self.__A
 
     def forward_prop(self, X):
         """Calculates the forward propagation of the neuron"""
-        self._A = 1.0 / (1.0 + np.exp(np.matmul(-self.W, (X))))
-        return self._A
+        self.__A = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W, (X))
+                                             + (np.ones(X.shape) * self.b))))
+        return self.__A
