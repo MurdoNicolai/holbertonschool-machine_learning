@@ -52,4 +52,4 @@ class Neuron():
         """Evaluates the neuron’s predictions"""
         label = self.forward_prop(X)
         prediction = self.cost(Y, label)
-        return (label.round(decimals=0), prediction)
+        return (label.astype(int), prediction)
