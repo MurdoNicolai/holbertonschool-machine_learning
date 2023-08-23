@@ -9,7 +9,6 @@ nn = Neuron(nx)
 nn._Neuron__b = 1
 X = np.random.randn(nx, m)
 A = nn.forward_prop(X)
-print(nn.b)
-print(A[0][1])
+print(A)
 
 
