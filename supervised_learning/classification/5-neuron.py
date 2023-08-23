@@ -56,18 +56,21 @@ class Neuron():
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """creates the training operation for the network"""
-        self.__b = self.__b + alpha/2
+        diff = alpha
+        self.__b = self.__b + diff/2
         bSup = self.cost(Y, self.forward_prop(X))
-        self.__b = self.__b - alpha/2
+        self.__b = self.__b - diff/2
         bInf = self.cost(Y, self.forward_prop(X))
-        db = (bSup - bInf) / alpha
+        db = (bSup - bInf) / diff
         self.__b = self.__b - db
 
-        
-        self.__W = self.__W + alpha/2
-        bSup = self.cost(Y, self.forward_prop(X))
-        self.__W = self.__W - alpha/2
-        bInf = self.cost(Y, self.forward_prop(X))
-        db = (bSup - bInf) / alpha
-        self.__W = self.__W - db
+
+        # self.__W = self.__W + diff/2
+        # WSup = self.cost(Y, self.forward_prop(X))
+        # self.__W = self.__W - diff/2
+        # WInf = self.cost(Y, self.forward_prop(X))
+        # dW = (WSup - WInf) / diff
+        # self.__W = self.__W - dW
+
+        # self.__W =
 
