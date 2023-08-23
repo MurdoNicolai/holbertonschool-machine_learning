@@ -58,4 +58,4 @@ class Neuron():
         """creates the training operation for the network"""
         dZ = A - Y
         self.__b = self.__b - alpha * np.average(dZ)
-        self.__W = self.__W - (alpha * X * dZ).T[0]
+        self.__W = self.__W - np.mean((alpha * X * dZ), axis=1)

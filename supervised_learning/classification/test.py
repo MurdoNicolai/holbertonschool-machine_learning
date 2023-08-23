@@ -9,13 +9,13 @@ nn = Neuron(nx)
 X = np.random.randn(nx, m)
 Y = np.random.randint(0, 2, (1, m))
 A = np.random.uniform(size=(1, m))
-print(nn.b)
+print(nn.W)
 nn.gradient_descent(X, Y, A)
-print(nn.b)
+print(nn.W)
 nn.gradient_descent(X, Y, A, alpha=0.5)
-print(nn.b)
+print(nn.W)
 try:
-    nn.b = 10
-    print('Fail: private attribute b overwritten as a public attribute')
+    nn.W = 10
+    print('Fail: private attribute W overwritten as a public attribute')
 except:
     pass
