@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 import numpy as np
-Neuron = __import__('2-neuron').Neuron
 
-np.random.seed(3)
-nx, m = np.random.randint(100, 1000, 2).tolist()
-nn = Neuron(nx)
-nn._Neuron__b = 1
-X = np.random.randn(nx, m)
-A = nn.forward_prop(X)
-print(A)
+Neuron = __import__('3-neuron').Neuron
 
+lib_train = np.load('../data/Binary_Train.npz')
+X_3D, Y = lib_train['X'], lib_train['Y']
+X = X_3D.reshape((X_3D.shape[0], -1)).T
+
+np.random.seed(0)
+neuron = Neuron(X.shape[0])
+A = neuron.forward_prop(X)
+cost = neuron.cost(Y, A)
+print(cost)
 
