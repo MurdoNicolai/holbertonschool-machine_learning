@@ -46,11 +46,10 @@ class Neuron():
 
     def cost(self, Y, A):
         """return the cost of the neuron"""
-        return(np.average(-np.log(1.0000001 - abs(Y*1.0000001 - A))))
+        return(np.average(-np.log(1.0000001 - abs(Y - A))))
 
     def evaluate(self, X, Y):
         """Evaluates the neuron’s predictions"""
-        label =  self.forward_prop( X)
+        label = self.forward_prop(X)
         prediction = self.cost(Y, label)
         return (label.round(decimals=0), prediction)
-
