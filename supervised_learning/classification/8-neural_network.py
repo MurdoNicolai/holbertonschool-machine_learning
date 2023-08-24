@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """contains neuron class"""
 import numpy as np
-import matplotlib.pyplot as plt
-
 
 class Neuron():
     """ deffines the neuron for a network"""
