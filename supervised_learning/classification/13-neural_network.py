@@ -65,8 +65,8 @@ class NeuralNetwork():
 
     def forward_prop(self, X):
         """Calculates the forward propagation of the neuron"""
-        self.__A1 = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W1, X)
-                           + np.matmul(self.b1, np.ones((1, len(X[0])))))))
+        Z1 = np.matmul(self.W1, X) + np.matmul(self.b1, np.ones((1, len(X[0]))))
+        self.__A1 = 1.0 / (1.0 + np.exp(-1 * Z1))
         self.__A2 = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W2, self.__A1)
                            + self.b2 * np.ones((1, len(self.__A1[0]))))))
         return (self.__A1, self.__A2)
@@ -83,12 +83,18 @@ class NeuralNetwork():
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """creates the training operation for the network"""
-        dZ1 = A1 - Y
         dZ2 = A2 - Y
-        self.__b1 = self.__b1 - alpha * np.mean(dZ1, axis = 1, keepdims=True)
-        self.__W1 = self.__W1 - (alpha * np.matmul(dZ1, X.T))
-        self.__b2 = np.resize(self.__b2 - alpha * np.average(dZ2),(1,1))
-        self.__W2[0] = self.__W2[0] - np.mean((alpha * A1 * dZ2), axis=1)
+        dW2 = np.mean((dZ2 * A1), axis=1)
+        db2 = np.average(dZ2, axis=1, keepdims=True)
+
+        dg = A1 * (1 - A1)
+        dZ1 = (np.matmul(self.__W2.T, dZ2)) * dg
+        dW1 = np.matmul(dZ1, X.T)/len(X[0])
+        db1 = np.sum(dZ1, axis=1, keepdims=True)/(len(X[0]))
+        self.__W2[0] = self.__W2[0] - alpha * dW2
+        self.__b2 = self.__b2 - alpha * db2
+        self.__W1 = self.__W1 - alpha * dW1
+        self.__b1 = self.__b1 - alpha * db1
 
     # def train(self, X, Y, iterations=5000, alpha=0.05,
     #           verbose=True, graph=True, step=100):
