@@ -92,7 +92,7 @@ class NeuralNetwork():
         dW1 = np.matmul(dZ1, X.T)/len(X[0])
         db1 = np.resize(np.sum(dZ1, axis=1), (len(A1), 1))/(len(X[0]))
         self.__W2[0] = self.__W2[0] - alpha * dW2
-        self.__b2 = self.__b2 - alpha * db2
+        self.__b2 = np.resize((self.__b2 - alpha * db2), (1, 1))
         self.__W1 = self.__W1 - alpha * dW1
         self.__b1 = self.__b1 - alpha * db1
 
