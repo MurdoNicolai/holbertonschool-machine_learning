@@ -65,7 +65,6 @@ class NeuralNetwork():
 
     def forward_prop(self, X):
         """Calculates the forward propagation of the neuron"""
-        print(self.W2.shape)
         self.__A1 = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W1, X)
                            + np.matmul(self.b1, np.ones((1, len(X[0])))))))
         self.__A2 = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W2, self.__A1)
