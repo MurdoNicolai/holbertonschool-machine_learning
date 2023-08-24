@@ -2,7 +2,7 @@
 """contains neuron class"""
 import numpy as np
 
-class Neuron():
+class NeuralNetwork():
     """ deffines the neuron for a network"""
     def __init__(self, nx, nodes):
         """
