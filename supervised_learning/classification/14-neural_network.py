@@ -115,16 +115,16 @@ class NeuralNetwork():
 
             self.gradient_descent(X, Y, A1, A2, alpha)
 
-            if verbose or graph:
-                if type(step) is not int:
-                    raise TypeError("step must be an integer")
-                elif step < 1 or step > iterations:
-                  raise ValueError("step must be positive and <= iterations")
-                if verbose and (iterati % step == 0 or iterati == iterations):
-                    print(
-                      f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
-                if graph and (iterati % step == 0 or iterati == iterations):
-                    grapheY.append(self.cost(Y, A1))
+            # if verbose or graph:
+            #     if type(step) is not int:
+            #         raise TypeError("step must be an integer")
+            #     elif step < 1 or step > iterations:
+            #       raise ValueError("step must be positive and <= iterations")
+            #     if verbose and (iterati % step == 0 or iterati == iterations):
+            #         print(
+            #           f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
+            #     if graph and (iterati % step == 0 or iterati == iterations):
+            #         grapheY.append(self.cost(Y, A1))
 
         # if graph:
         #     x = np.linspace(0, iterations, iterations/step)
