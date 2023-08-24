@@ -26,40 +26,9 @@ class NeuralNetwork():
             raise ValueError("nodes must be a positive integer")
 
         else:
-            self.__W1 = np.random.randn(1, nx)
-            self.__b1 = 0
-            self.__A1 = 0
-            self.__W2 = np.random.randn(1, nx)
-            self.__b2 = 0
-            self.__A2 = 0
-
-    @property
-    def W1(self):
-        """I'm the 'Weight' property."""
-        return self.__W1
-
-    @property
-    def b1(self):
-        """I'm the 'bias' property."""
-        return self.__b1
-
-    @property
-    def A1(self):
-        """I'm the 'Activation' property."""
-        return self.__A1
-
-    @property
-    def W2(self):
-        """I'm the 'Weight' property."""
-        return self.__W2
-
-    @property
-    def b2(self):
-        """I'm the 'bias' property."""
-        return self.__b2
-
-    @property
-    def A2(self):
-        """I'm the 'Activation' property."""
-        return self.__A2
-
+            self.W1 = np.random.randn(1, nx)
+            self.b1 = 0
+            self.A1 = 0
+            self.W2 = np.random.randn(1, nodes)
+            self.b2 = 0
+            self.A2 = 0
