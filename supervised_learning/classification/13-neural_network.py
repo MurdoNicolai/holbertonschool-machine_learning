@@ -119,7 +119,7 @@ class NeuralNetwork():
                 if type(step) is not int:
                     raise TypeError("step must be an integer")
                 elif step < 1 or step > iterations:
-                  raise ValueError("step must be positive and <= iterations")
+                    raise ValueError("step must be positive and <= iterations")
                 if verbose and (iterati % step == 0 or iterati == iterations):
                     print(
                       f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
