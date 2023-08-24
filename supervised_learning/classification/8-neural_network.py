@@ -2,12 +2,12 @@
 """contains neuron class"""
 import numpy as np
 
+
 class NeuralNetwork():
     """ deffines the neuron for a network"""
     def __init__(self, nx, nodes):
         """
         initialize the neuron
-
         W1: The weights vector for the hidden layer.
         b1: The bias for the hidden layer.
         A1: The activated output for the hidden layer.
