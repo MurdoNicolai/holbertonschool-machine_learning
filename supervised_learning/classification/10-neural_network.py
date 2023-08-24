@@ -101,7 +101,7 @@ class NeuralNetwork():
     #         raise ValueError("alpha must be positive")
 
     #     grapheY = []
-    #     for iterati in range(iterations):
+    #     foriterati in range(iterations):
 
     #         A = self.forward_prop(X)
 
