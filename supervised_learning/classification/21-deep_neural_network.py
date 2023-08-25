@@ -82,10 +82,11 @@ class DeepNeuralNetwork():
         newweights = {}
 
         for i in range(len_cache - 1, 0, -1):
+            if i == len_cache - 1:
+                da = -(Y/A)+((1-Y)/(1-A))
             A2 = cache["A{}".format(i)]
             A1 = cache["A{}".format(i - 1)]
             dg2 = A2 * (1 - A2)
-            print(dg2.shape, da.shape)
             dZ = (da) * dg2
             dW = np.matmul(dZ, A1.T)/len(A1[0])
             db = np.resize(np.sum(dZ, axis=1), (len(A2), 1))/(len(A1[0]))
