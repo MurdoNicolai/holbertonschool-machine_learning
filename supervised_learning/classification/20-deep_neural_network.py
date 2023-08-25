@@ -71,8 +71,8 @@ class DeepNeuralNetwork():
     def evaluate(self, X, Y):
         """Evaluates the neuron’s predictions"""
         label = self.forward_prop(X)
-        prediction = self.cost(Y, label[1])
-        return (label[1].round().astype(int), prediction)
+        prediction = self.cost(Y, label[0])
+        return (label[0].round().astype(int), prediction)
 
     # def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
     #     """creates the training operation for the network"""

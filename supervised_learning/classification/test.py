@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 
 import numpy as np
-Deep = __import__('18-deep_neural_network').DeepNeuralNetwork
 
-np.random.seed(18)
-nx, m = np.random.randint(100, 1000, 2).tolist()
-l = np.random.randint(3, 10)
-sizes = np.random.randint(5, 20, l - 1).tolist()
-sizes.append(1)
-d = Deep(nx, sizes)
-for i in range(l):
-    d._DeepNeuralNetwork__weights['b' + str(i + 1)] = np.ones((sizes[i], 1))
-X = np.random.randn(nx, m)
-A, cache = d.forward_prop(X)
+Deep = __import__('20-deep_neural_network').DeepNeuralNetwork
+
+lib_train = np.load('../data/Binary_Train.npz')
+X_3D, Y = lib_train['X'], lib_train['Y']
+X = X_3D.reshape((X_3D.shape[0], -1)).T
+
+np.random.seed(0)
+deep = Deep(X.shape[0], [5, 3, 1])
+A, cost = deep.evaluate(X, Y)
 print(A)
-for k, v in sorted(cache.items()):
-    print(k, v)
+print(cost)
