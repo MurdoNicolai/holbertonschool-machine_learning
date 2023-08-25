@@ -1,15 +1,25 @@
 #!/usr/bin/env python3
 
 import numpy as np
-
 Deep = __import__('21-deep_neural_network').DeepNeuralNetwork
 
-lib_train = np.load('../data/Binary_Train.npz')
-X_3D, Y = lib_train['X'], lib_train['Y']
-X = X_3D.reshape((X_3D.shape[0], -1)).T
+np.random.seed(21)
+nx, m = np.random.randint(100, 1000, 2).tolist()
+l = np.random.randint(3, 10)
+sizes = np.random.randint(5, 20, l - 1).tolist()
+sizes.append(1)
+d = Deep(nx, sizes)
+X = np.random.randn(nx, m)
+Y = np.random.randint(0, 2, (1, m))
+_, cache = d.forward_prop(X)
 
-np.random.seed(0)
-deep = Deep(X.shape[0], [5, 3, 1])
-A, cache = deep.forward_prop(X)
-deep.gradient_descent(Y, cache, 0.5)
-print(deep.weights)
+for k, v in sorted(d.weights.items()):
+    print(k, v)
+d.gradient_descent(Y, cache, alpha=0.5)
+for k, v in sorted(d.weights.items()):
+    print(k, v)
+try:
+    d.weights = 10
+    print('Fail: private attribute weights is overwritten as a public attribute')
+except:
+    pass
