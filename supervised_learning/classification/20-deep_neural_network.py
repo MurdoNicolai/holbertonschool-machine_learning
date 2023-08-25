@@ -74,22 +74,27 @@ class DeepNeuralNetwork():
         prediction = self.cost(Y, label[0])
         return (label[0].round().astype(int), prediction)
 
-    # def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
+    # def gradient_descent(self, Y, cache, alpha=0.05):
     #     """creates the training operation for the network"""
-    #     dZ2 = A2 - Y
-    #     dW2 = np.mean((dZ2 * A1), axis=1)
-    #     db2 = np.average(dZ2, axis=1)
+    #     da = -(Y/np.argmax(cache)+((1-Y)/(1-A2))
 
-    #     dg = A1 * (1 - A1)
-    #     dZ1 = (np.matmul(self.__W2.T, dZ2)) * dg
+    #     dg2 = A2 * (1 - A2)
+    #     dZ2 = (da2) * dg2
+    #     dW2 = np.matmul(dZ2, A1.T)/len(A1[0])
+    #     db2 = np.resize(np.sum(dZ2, axis=1), (len(A2), 1))/(len(A1[0]))
+    #     da1 = np.matmul(self.__W2.T, dZ2)
+
+    #     dg1 = A1 * (1 - A1)
+    #     dZ1 = (da1) * dg1
     #     dW1 = np.matmul(dZ1, X.T)/len(X[0])
     #     db1 = np.resize(np.sum(dZ1, axis=1), (len(A1), 1))/(len(X[0]))
+
     #     self.__W2[0] = self.__W2[0] - alpha * dW2
-    #     self.__b2 = np.resize((self.__b2 - alpha * db2), (1, 1))
+    #     self.__b2 = self.__b2 - alpha * db2
     #     self.__W1 = self.__W1 - alpha * dW1
     #     self.__b1 = self.__b1 - alpha * db1
 
-    # def train(self, X, Y, iterations=5000, alpha=0.05,
+    # # def train(self, X, Y, iterations=5000, alpha=0.05,
     #           verbose=True, graph=True, step=100):
     #     """Trains the neuron"""
     #     if type(iterations) is not int:

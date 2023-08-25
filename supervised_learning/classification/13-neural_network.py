@@ -83,48 +83,53 @@ class NeuralNetwork():
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """creates the training operation for the network"""
-        dZ2 = A2 - Y
-        dW2 = np.mean((dZ2 * A1), axis=1)
-        db2 = np.average(dZ2, axis=1)
+        da2 = -(Y/A2)+((1-Y)/(1-A2))
 
-        dg = A1 * (1 - A1)
-        dZ1 = (np.matmul(self.__W2.T, dZ2)) * dg
+        dg2 = A2 * (1 - A2)
+        dZ2 = (da2) * dg2
+        dW2 = np.matmul(dZ2, A1.T)/len(A1[0])
+        db2 = np.resize(np.sum(dZ2, axis=1), (len(A2), 1))/(len(A1[0]))
+        da1 = np.matmul(self.__W2.T, dZ2)
+
+        dg1 = A1 * (1 - A1)
+        dZ1 = (da1) * dg1
         dW1 = np.matmul(dZ1, X.T)/len(X[0])
         db1 = np.resize(np.sum(dZ1, axis=1), (len(A1), 1))/(len(X[0]))
+
         self.__W2[0] = self.__W2[0] - alpha * dW2
         self.__b2 = self.__b2 - alpha * db2
         self.__W1 = self.__W1 - alpha * dW1
         self.__b1 = self.__b1 - alpha * db1
 
-    def train(self, X, Y, iterations=5000, alpha=0.05,
-              verbose=False, graph=False, step=100):
-        """Trains the neuron"""
-        if type(iterations) is not int:
-            raise TypeError("iterations must be an integer")
-        elif iterations < 1:
-            raise ValueError("iterations must be a positive integer")
-        if type(alpha) is not float:
-            raise TypeError("alpha must be a float")
-        elif alpha < 0:
-            raise ValueError("alpha must be positive")
+    # def train(self, X, Y, iterations=5000, alpha=0.05,
+    #           verbose=False, graph=False, step=100):
+    #     """Trains the neuron"""
+    #     if type(iterations) is not int:
+    #         raise TypeError("iterations must be an integer")
+    #     elif iterations < 1:
+    #         raise ValueError("iterations must be a positive integer")
+    #     if type(alpha) is not float:
+    #         raise TypeError("alpha must be a float")
+    #     elif alpha < 0:
+    #         raise ValueError("alpha must be positive")
 
-        grapheY = []
-        for iterati in range(iterations):
+    #     grapheY = []
+    #     for iterati in range(iterations):
 
-            A1, A2 = self.forward_prop(X)
+    #         A1, A2 = self.forward_prop(X)
 
-            self.gradient_descent(X, Y, A1, A2, alpha)
+    #         self.gradient_descent(X, Y, A1, A2, alpha)
 
-            if verbose or graph:
-                if type(step) is not int:
-                    raise TypeError("step must be an integer")
-                elif step < 1 or step > iterations:
-                    raise ValueError("step must be positive and <= iterations")
-                if verbose and (iterati % step == 0 or iterati == iterations):
-                    print(
-                      f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
-                if graph and (iterati % step == 0 or iterati == iterations):
-                    grapheY.append(self.cost(Y, A1))
+    #         if verbose or graph:
+    #             if type(step) is not int:
+    #                 raise TypeError("step must be an integer")
+    #             elif step < 1 or step > iterations:
+    #                 raise ValueError("step must be positive and <= iterations")
+    #             if verbose and (iterati % step == 0 or iterati == iterations):
+    #                 print(
+    #                   f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
+    #             if graph and (iterati % step == 0 or iterati == iterations):
+    #                 grapheY.append(self.cost(Y, A1))
 
         # if graph:
         #     x = np.linspace(0, iterations, iterations/step)
