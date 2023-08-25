@@ -88,7 +88,8 @@ class DeepNeuralNetwork():
             dZ = (da) * dg2
             dW = np.matmul(dZ, A1.T)/len(A1[0])
             db = np.resize(np.sum(dZ, axis=1), (len(A2), 1))/(len(A1[0]))
-            da = np.matmul(np.transpose(self.weights["W{}".format(i)]), dZ)
+            print(self.weights["W{}".format(i)].T.shape, dZ.shape)
+            da = np.matmul(self.weights["W{}".format(i)].T, dZ)
             newweights.update({"W{}".format(i):
                               self.weights["W{}".format(i)] - alpha * dW})
             newweights.update({"b{}".format(i):
