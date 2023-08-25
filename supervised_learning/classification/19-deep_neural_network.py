@@ -68,11 +68,11 @@ class DeepNeuralNetwork():
         """return the cost of the neuron"""
         return(np.average(-np.log(abs((1.0000001 - Y*1.0000001) - A))))
 
-    # def evaluate(self, X, Y):
-    #     """Evaluates the neuron’s predictions"""
-    #     label = self.forward_prop(X)
-    #     prediction = self.cost(Y, label[1])
-    #     return (label[1].round().astype(int), prediction)
+    def evaluate(self, X, Y):
+        """Evaluates the neuron’s predictions"""
+        label = self.forward_prop(X)
+        prediction = self.cost(Y, label[1])
+        return (label[1].round().astype(int), prediction)
 
     # def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
     #     """creates the training operation for the network"""
