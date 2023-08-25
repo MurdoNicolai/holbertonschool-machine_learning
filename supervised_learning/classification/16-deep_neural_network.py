@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """contains neuron class"""
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class DeepNeuralNetwork():
