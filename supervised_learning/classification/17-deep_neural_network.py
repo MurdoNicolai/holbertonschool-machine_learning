@@ -37,19 +37,19 @@ class DeepNeuralNetwork():
             self.__cache = {}
 
     # @property
-    def __L(self):
+    def L(self):
         """I'm the 'Weight' property."""
-        return self.__W1
+        return self.__L
 
     @property
-    def __cache(self):
+    def cache(self):
         """I'm the 'bias' property."""
-        return self.__b1
+        return self.__cache
 
     @property
-    def __weights(self):
+    def weights(self):
         """I'm the 'Activation' property."""
-        return self.__A1
+        return self.__weights
 
     # def forward_prop(self, X):
     #     """Calculates the forward propagation of the neuron"""
