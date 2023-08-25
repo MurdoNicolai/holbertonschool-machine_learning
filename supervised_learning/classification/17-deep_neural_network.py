@@ -28,10 +28,10 @@ class DeepNeuralNetwork():
                             "layers must be a list of positive integers")
                 else:
                     w_std = np.sqrt(2.0 / nx)
-                    self.weights.update({"W{}".format(layer + 1):
-                                         np.random.randn(nodes, nx) * w_std})
-                    self.weights.update({"b{}".format(layer + 1):
-                                         np.zeros((nodes, 1))})
+                    self.__weights.update({"W{}".format(layer + 1):
+                                           np.random.randn(nodes, nx) * w_std})
+                    self.__weights.update({"b{}".format(layer + 1):
+                                           np.zeros((nodes, 1))})
                     nx = nodes
             self.__L = len(layers)
             self.__cache = {}
@@ -51,13 +51,15 @@ class DeepNeuralNetwork():
         """I'm the 'weights' property."""
         return self.__weights
 
-    # def forward_prop(self, X):
-    #     """Calculates the forward propagation of the neuron"""
-    #     Z1 = np.matmul(self.W1, X) + self.b1 * np.ones((1, len(X[0])))
-    #     self.__A1 = 1.0 / (1.0 + np.exp(-1 * Z1))
-    #     self.__A2 = 1.0 / (1.0 + np.exp(-1 * (np.matmul(self.W2, self.__A1)
-    #                        + self.b2 * np.ones((1, len(self.__A1[0]))))))
-    #     return (self.__A1, self.__A2)
+    def forward_prop(self, X):
+        """Calculates the forward propagation of the neurons"""
+        for nb in range(len(self.weights)/2):
+            w_nb = nb + 1
+            Z = (np.matmul(self.weights["W{}".format(w_nb)], X) +
+                 self.weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
+            self.__cache.update({"A{}".format(w_nb):
+                                 1.0 / (1.0 + np.exp(-1 * Z))})
+        return (self.__cache)
 
     # def cost(self, Y, A):
     #     """return the cost of the neuron"""
