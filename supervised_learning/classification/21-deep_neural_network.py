@@ -95,42 +95,42 @@ class DeepNeuralNetwork():
                               self.weights["b{}".format(i)] - alpha * db})
         self.__weights = newweights
 
-    # def train(self, X, Y, iterations=5000, alpha=0.05,
-    #           verbose=True, graph=True, step=100):
-    #     """Trains the neuron"""
-    #     if type(iterations) is not int:
-    #         raise TypeError("iterations must be an integer")
-    #     elif iterations < 1:
-    #         raise ValueError("iterations must be a positive integer")
-    #     if type(alpha) is not float:
-    #         raise TypeError("alpha must be a float")
-    #     elif alpha < 0:
-    #         raise ValueError("alpha must be positive")
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=False, graph=False, step=100):
+        """Trains the neuron"""
+        if type(iterations) is not int:
+            raise TypeError("iterations must be an integer")
+        elif iterations < 1:
+            raise ValueError("iterations must be a positive integer")
+        if type(alpha) is not float:
+            raise TypeError("alpha must be a float")
+        elif alpha < 0:
+            raise ValueError("alpha must be positive")
 
-    #     grapheY = []
-    #     foriterati in range(iterations):
+        # grapheY = []
+        for iterati in range(iterations):
 
-    #         A1, A2 = self.forward_prop(X)
+            cache = self.forward_prop(X)
 
-    #         self.gradient_descent(X, Y, A1, A2, alpha)
+            self.gradient_descent(X, Y, cache, alpha)
 
-    #         if verbose or graph:
-    #             if type(step) is not int:
-    #                 raise TypeError("step must be an integer")
-    #             elif step < 1 or step > iterations:
-    #               raise ValueError("step must be positive and <= iterations")
-    #            if verbose and (iterati % step == 0 or iterati == iterations):
-    #                 print(
-    #                   f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
-    #             if graph and (iterati % step == 0 or iterati == iterations):
-    #                 grapheY.append(self.cost(Y, A1))
+            # if verbose or graph:
+            #     if type(step) is not int:
+            #         raise TypeError("step must be an integer")
+            #     elif step < 1 or step > iterations:
+            #       raise ValueError("step must be positive and <= iterations")
+            #    if verbose and (iterati % step == 0 or iterati == iterations):
+        #             print(
+        #               f"Cost after {iterati} iterations: {self.cost(Y, A1)}")
+        #         if graph and (iterati % step == 0 or iterati == iterations):
+        #             grapheY.append(self.cost(Y, A1))
 
-    #     if graph:
-    #         x = np.linspace(0, iterations, iterations/step)
-    #         y = grapheY
-    #         plt.plot(x, y)
-    #         plt.xlabel("iteration")
-    #         plt.ylabel("cost")
-    #         plt.title("Training Cost")
-    #         plt.show()
-    #     return self.evaluate(X, Y)
+        # if graph:
+        #     x = np.linspace(0, iterations, iterations/step)
+        #     y = grapheY
+        #     plt.plot(x, y)
+        #     plt.xlabel("iteration")
+        #     plt.ylabel("cost")
+        #     plt.title("Training Cost")
+        #     plt.show()
+        return self.evaluate(X, Y)
