@@ -53,7 +53,7 @@ class DeepNeuralNetwork():
 
     def forward_prop(self, X):
         """Calculates the forward propagation of the neurons"""
-        self.__cache.update({"A0": np.zeros(X.shape)})
+        self.__cache.update({"A0": X})
         w_nb = 0
         while w_nb < len(self.weights)/2:
             w_nb = w_nb + 1
