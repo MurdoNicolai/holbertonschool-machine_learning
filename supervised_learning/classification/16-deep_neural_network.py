@@ -20,7 +20,7 @@ class DeepNeuralNetwork():
         if type(layers) is not list or layers == []:
             raise TypeError("layers must be a list of positive integers")
         else:
-            self.weights = {}
+            self.__weights = {}
             for layer in range(len(layers)):
                 nodes = layers[layer]
                 if type(nodes) is not int or nodes < 0:
@@ -33,38 +33,23 @@ class DeepNeuralNetwork():
                     self.weights.update({"b{}".format(layer + 1):
                                          np.zeros((nodes, 1))})
                     nx = nodes
-            self.L = len(layers)
-            self.cache = {}
+            self.__L = len(layers)
+            self.__cache = {}
 
     # @property
-    # def W1(self):
-    #     """I'm the 'Weight' property."""
-    #     return self.__W1
+    def __L(self):
+        """I'm the 'Weight' property."""
+        return self.__W1
 
-    # @property
-    # def b1(self):
-    #     """I'm the 'bias' property."""
-    #     return self.__b1
+    @property
+    def __cache(self):
+        """I'm the 'bias' property."""
+        return self.__b1
 
-    # @property
-    # def A1(self):
-    #     """I'm the 'Activation' property."""
-    #     return self.__A1
-
-    # @property
-    # def W2(self):
-    #     """I'm the 'Weight' property."""
-    #     return self.__W2
-
-    # @property
-    # def b2(self):
-    #     """I'm the 'bias' property."""
-    #     return self.__b2
-
-    # @property
-    # def A2(self):
-    #     """I'm the 'Activation' property."""
-    #     return self.__A2
+    @property
+    def __weights(self):
+        """I'm the 'Activation' property."""
+        return self.__A1
 
     # def forward_prop(self, X):
     #     """Calculates the forward propagation of the neuron"""
