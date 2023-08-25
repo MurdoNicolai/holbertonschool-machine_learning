@@ -76,10 +76,8 @@ class DeepNeuralNetwork():
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """creates the training operation for the network"""
-        A = list(cache.values())[-1]
-        print(A.shape)
+        A = cache["A{}".format(len(cache) - 1)]
         da = -(Y/A)+((1-Y)/(1-A))
-        print(da.shape)
         len_cache = len(cache)
         newweights = {}
 
