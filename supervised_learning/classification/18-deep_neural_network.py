@@ -64,9 +64,9 @@ class DeepNeuralNetwork():
             X = self.cache["A{}".format(w_nb)]
         return (X, self.cache)
 
-    # def cost(self, Y, A):
-    #     """return the cost of the neuron"""
-    #     return(np.average(-np.log(abs((1.0000001 - Y*1.0000001) - A))))
+    def cost(self, Y, A):
+        """return the cost of the neuron"""
+        return(np.average(-np.log(abs((1.0000001 - Y*1.0000001) - A))))
 
     # def evaluate(self, X, Y):
     #     """Evaluates the neuron’s predictions"""
