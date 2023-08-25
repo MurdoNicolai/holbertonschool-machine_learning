@@ -28,7 +28,7 @@ class DeepNeuralNetwork():
                             "layers must be a list of positive integers")
                 else:
                     w_std = np.sqrt(2.0 / nx)
-                    self.weights.update({"w{}".format(layer + 1):
+                    self.weights.update({"W{}".format(layer + 1):
                                          np.random.randn(nodes, nx) * w_std})
                     self.weights.update({"b{}".format(layer + 1):
                                          np.zeros((nodes, 1))})
