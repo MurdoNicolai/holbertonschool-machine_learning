@@ -8,7 +8,7 @@ class DeepNeuralNetwork():
     def __init__(self, nx, layers):
         """
         initialize the neuronL:
-        The number of layers in the neural network.
+        L: The number of layers in the neural network.
         cache: A dictionary to hold all intermediary values of the network
         weights: A dictionary to hold all weights and biased of the network.
 
@@ -36,19 +36,19 @@ class DeepNeuralNetwork():
             self.__L = len(layers)
             self.__cache = {}
 
-    # @property
+    @property
     def L(self):
-        """I'm the 'Weight' property."""
+        """I'm the 'L' property."""
         return self.__L
 
     @property
     def cache(self):
-        """I'm the 'bias' property."""
+        """I'm the 'cache' property."""
         return self.__cache
 
     @property
     def weights(self):
-        """I'm the 'Activation' property."""
+        """I'm the 'weights' property."""
         return self.__weights
 
     # def forward_prop(self, X):
