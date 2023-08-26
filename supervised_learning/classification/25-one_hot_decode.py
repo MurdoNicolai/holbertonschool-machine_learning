@@ -5,7 +5,7 @@ import numpy as np
 
 def one_hot_decode(one_hot):
     """converts one_hot matrix into numerical base vector"""
-    if type(one_hot) is not np.ndarray:
+    if type(one_hot) is not np.ndarray or type(one_hot[0]) is not np.ndarray:
         return None
     nb_in_row = len(one_hot[0])
     numbers = np.array(range(0, nb_in_row))
