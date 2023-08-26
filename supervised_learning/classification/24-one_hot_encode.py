@@ -5,9 +5,9 @@ import numpy as np
 
 def one_hot_encode(Y, classes):
     """converts numerical base vector into matrix"""
-    one_hot_matrix = np.zeros((classes, len(Y)))
     if type(Y) is not np.ndarray or type(classes) is not int:
         return None
+    one_hot_matrix = np.zeros((classes, len(Y)))
     for row in range(len(Y)):
         num = Y[row]
         if num >= classes:
