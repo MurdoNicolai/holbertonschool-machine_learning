@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 class DeepNeuralNetwork():
     """ deffines the neuron for a network"""
     def __init__(self, nx, layers):
@@ -119,10 +120,10 @@ class DeepNeuralNetwork():
                 if type(step) is not int:
                     raise TypeError("step must be an integer")
                 elif step < 1 or step > iterations:
-                  raise ValueError("step must be positive and <= iterations")
+                    raise ValueError("step must be positive and <= iterations")
                 if verbose and (iterati % step == 0 or iterati == iterations):
-                    print(
-                      f"Cost after {iterati} iterations: {self.cost(Y, A)}")
+                    print("Cost after {} iterations: {}"
+                          .format(iterati, self.cost(Y, A)))
                 if graph and (iterati % step == 0 or iterati == iterations):
                     grapheY.append(self.cost(Y, A))
 
@@ -143,11 +144,10 @@ class DeepNeuralNetwork():
         with open(filename, 'wb') as handle:
             pickle.dump(self, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-
     def load(filename):
         """save as pickle format"""
         try:
             with open('filename.pickle', 'rb') as handle:
                 b = pickle.load(handle)
-        except:
+        except IOError:
             return None
