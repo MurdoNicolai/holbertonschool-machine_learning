@@ -9,6 +9,6 @@ def one_hot_decode(one_hot):
         or type(one_hot[0]) is not np.ndarray
         or type(one_hot[0][0]) is not np.float64):
         return None
-    nb_in_row = len(one_hot[0])
+    nb_in_row = len(one_hot)
     numbers = np.array(range(0, nb_in_row))
     return np.matmul(numbers, one_hot.astype(int))
