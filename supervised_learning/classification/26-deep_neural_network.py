@@ -148,9 +148,7 @@ class DeepNeuralNetwork():
         """save as pickle format"""
         try:
             with open(filename, 'rb') as handle:
-                print("her")
                 b = pickle.load(handle)
-                print(b)
         except IOError:
             return None
         return b
