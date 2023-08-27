@@ -62,20 +62,12 @@ class DeepNeuralNetwork():
             Z = (np.matmul(self.weights["W{}".format(w_nb)], X) +
                  self.weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
             if w_nb < len(self.weights)/2:
-                self.__cache.update({"A{}".format(w_nb):
-                                     1.0 / (1.0 + np.exp(-1 * Z))})
-                X = self.cache["A{}".format(w_nb)]
+                A = 1.0 / (1.0 + np.exp(-1 * Z))
             else:
-                X = 1.0 / (1.0 + np.exp(-1 * Z))
-        X = X.T
-        for sample_nb in range(len(X)):
-            Max = max(X[sample_nb])
-            for num in range(len(X[0])):
-                if X[sample_nb][num] != Max:
-                    X[sample_nb][num] = 0
-                else:
-                    X[sample_nb][num] = Max
-        X = X.T
+                exp_Z = np.exp(Z)
+                A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
+            self.__cache.update({"A{}".format(w_nb): A})
+            X = self.cache["A{}".format(w_nb)]
         return (X, self.cache)
 
     def cost(self, Y, A):
