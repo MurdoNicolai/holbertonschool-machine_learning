@@ -15,7 +15,7 @@ class DeepNeuralNetwork():
         weights: A dictionary to hold all weights and biased of the network.
 
         """
-        if activation is not "sig" and activation is not "tanh":
+        if activation != "sig" and activation != "tanh":
             raise ValueError("activation must be 'sig' or 'tanh'")
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
