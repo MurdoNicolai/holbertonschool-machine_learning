@@ -1,9 +1,22 @@
-#!/usr/bin/env python3
 import tensorflow.compat.v1 as tf
 
-
 def create_placeholders(nx, classes):
-    """ returns two placeholders, x and y, for the neural network"""
-    x = tf.placeholder("int", shape=(1, nx))
-    y = tf.v1.placeholder("int", shape=(classes, nx))
+    """
+    Creates placeholders for input data and labels.
+
+    Arguments:
+    nx -- number of feature columns in the data
+    classes -- number of classes in the classifier
+
+    Returns:
+    x -- placeholder for input data
+    y -- placeholder for one-hot labels
+    """
+
+    # Create a placeholder for input data with shape [None, nx]
+    x = tf.placeholder(tf.float32, shape=(None, nx), name="x")
+
+    # Create a placeholder for one-hot labels with shape [None, classes]
+    y = tf.placeholder(tf.float32, shape=(None, classes), name="y")
+
     return x, y
