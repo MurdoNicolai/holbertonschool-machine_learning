@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import tensorflow.compat.v1 as tf
 """contains tenserflow stuff"""
+import tensorflow.compat.v1 as tf
+
 
 
 def create_placeholders(nx, classes):
@@ -16,10 +17,8 @@ def create_placeholders(nx, classes):
     y -- placeholder for one-hot labels
     """
 
-    # Create a placeholder for input data with shape [None, nx]
     x = tf.placeholder(tf.float32, shape=(None, nx), name="x")
 
-    # Create a placeholder for one-hot labels with shape [None, classes]
     y = tf.placeholder(tf.float32, shape=(None, classes), name="y")
 
     return x, y
