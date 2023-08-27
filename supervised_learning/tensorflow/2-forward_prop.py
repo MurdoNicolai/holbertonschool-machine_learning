@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """contains tenserflow stuff"""
 import tensorflow.compat.v1 as tf
+create_layer = __import__('1-create_layer').create_layer
 
 
 def forward_prop(x, layer_sizes=[], activations=[]):
@@ -15,9 +16,6 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     Returns:
     prediction -- tensor representing the prediction of the network
     """
-
-    # Import create_layer function
-    create_layer = __import__('1-create_layer').create_layer
 
     prev_layer = x  # Initialize the previous layer with input data
 
