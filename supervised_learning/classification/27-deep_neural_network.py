@@ -61,20 +61,34 @@ class DeepNeuralNetwork():
             w_nb = w_nb + 1
             Z = (np.matmul(self.weights["W{}".format(w_nb)], X) +
                  self.weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
-            self.__cache.update({"A{}".format(w_nb):
-                                 1.0 / (1.0 + np.exp(-1 * Z))})
-            X = self.cache["A{}".format(w_nb)]
+            if w_nb < len(self.weights)/2:
+                self.__cache.update({"A{}".format(w_nb):
+                                     1.0 / (1.0 + np.exp(-1 * Z))})
+                X = self.cache["A{}".format(w_nb)]
+            else:
+                X = 1.0 / (1.0 + np.exp(-1 * Z))
+        X = X.T
+        for sample_nb in range(len(X)):
+            Max = max(X[sample_nb])
+            for num in range(len(X[0])):
+                if X[sample_nb][num] != Max:
+                    X[sample_nb][num] = 0
+                else:
+                    X[sample_nb][num] = Max
+        X = X.T
         return (X, self.cache)
 
     def cost(self, Y, A):
         """return the cost of the neuron"""
+        Y = np.max(np.around((Y * A), decimals=0), axis=0)
+        A = np.max(A, axis=0)
         return(np.average(-np.log(abs((1.0000001 - Y*1.0000001) - A))))
 
     def evaluate(self, X, Y):
         """Evaluates the neuron’s predictions"""
         label = self.forward_prop(X)
         prediction = self.cost(Y, label[0])
-        return (label[0].round().astype(int), prediction)
+        return (label[0].round(), prediction)
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """creates the training operation for the network"""
@@ -98,7 +112,7 @@ class DeepNeuralNetwork():
         self.__weights = newweights
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
-              verbose=False, graph=False, step=100):
+              verbose=True, graph=True, step=100):
         """Trains the neuron"""
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
