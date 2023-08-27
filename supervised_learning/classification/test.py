@@ -18,10 +18,4 @@ Y = one_hot(np.random.randint(0, classes, m), classes)
 deep = Deep(nx, [100, 50, classes])
 A, cost = deep.train(X, Y, iterations=10, graph=False, verbose=False)
 A = A.astype(float)
-print(np.round(A, 10))
 print(np.round(cost, 10))
-print(deep.L)
-for k, v in sorted(deep.cache.items()):
-    print(k, np.round(v, 10))
-for k, v in sorted(deep.weights.items()):
-    print(k, np.round(v, 10))

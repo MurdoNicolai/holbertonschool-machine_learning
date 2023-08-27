@@ -71,10 +71,14 @@ class DeepNeuralNetwork():
         return (X, self.cache)
 
     def cost(self, Y, A):
-        """return the cost of the neuron"""
-        Y = np.max(np.around((Y * A), decimals=0), axis=0)
-        A = np.max(A, axis=0)
-        return(np.average(-np.log(abs((1.0000001 - Y*1.0000001) - A))))
+        """Return the cost of the neuron using categorical cross-entropy loss"""
+        m = Y.shape[1]  # Number of samples
+
+        # Compute the categorical cross-entropy loss
+        epsilon = 1e-10  # Small constant to avoid log(0)
+        loss = -1/m * np.sum(Y * np.log(A + epsilon))
+
+        return loss
 
     def evaluate(self, X, Y):
         """Evaluates the neuron’s predictions"""
