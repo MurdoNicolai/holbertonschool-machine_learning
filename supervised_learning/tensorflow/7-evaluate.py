@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """contains tenserflow stuff"""
 import tensorflow.compat.v1 as tf
-import numpy as np
 
 
 def evaluate(X, Y, save_path):
@@ -9,8 +8,8 @@ def evaluate(X, Y, save_path):
     Evaluates the output of a neural network.
 
     Arguments:
-    X -- numpy.ndarray containing the input data to evaluate
-    Y -- numpy.ndarray containing the one-hot labels for X
+    X -- TensorFlow placeholder for the input data to evaluate
+    Y -- TensorFlow placeholder for the one-hot labels for X
     save_path -- location to load the model from
 
     Returns:
@@ -36,6 +35,7 @@ def evaluate(X, Y, save_path):
         accuracy = tf.get_collection('accuracy')[0]
 
         # Evaluate the model on the input data
-        prediction, eval_loss, eval_accuracy = sess.run([y_pred, loss, accuracy], feed_dict={x: X, y: Y})
+        prediction, eva_los, eval_accuracy = sess.run([y_pred, loss, accuracy],
+                                                      feed_dict={x: X, y: Y})
 
-    return prediction, eval_accuracy, eval_loss
+    return prediction, eval_accuracy, eva_los
