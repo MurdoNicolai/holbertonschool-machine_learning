@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 class DeepNeuralNetwork():
     """ deffines the neuron for a network"""
-    def __init__(self, nx, layers):
+    def __init__(self, nx, layers, activation='sig'):
         """
         initialize the neuronL:
         L: The number of layers in the neural network.
@@ -15,6 +15,8 @@ class DeepNeuralNetwork():
         weights: A dictionary to hold all weights and biased of the network.
 
         """
+        if activation is not "sig" or activation is not "tanh":
+            raise ValueError("activation must be 'sig' or 'tanh'")
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
         elif nx < 1:
@@ -37,11 +39,17 @@ class DeepNeuralNetwork():
                     nx = nodes
             self.__L = len(layers)
             self.__cache = {}
+            self.__activation = activation
 
     @property
     def L(self):
         """I'm the 'L' property."""
         return self.__L
+
+    @property
+    def activation(self):
+        """I'm the 'activation' property."""
+        return self.__activation
 
     @property
     def cache(self):
@@ -62,7 +70,10 @@ class DeepNeuralNetwork():
             Z = (np.matmul(self.weights["W{}".format(w_nb)], X) +
                  self.weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
             if w_nb < len(self.weights)/2:
-                A = 1.0 / (1.0 + np.exp(-1 * Z))
+                if self.activation == "sig":
+                    A = 1.0 / (1.0 + np.exp(-Z))
+                elif self.activation == "tanh":
+                    A = np.tanh(Z)
             else:
                 exp_Z = np.exp(Z)
                 A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
@@ -94,7 +105,10 @@ class DeepNeuralNetwork():
         for i in range(len_cache - 1, 0, -1):
             A2 = cache["A{}".format(i)]
             A1 = cache["A{}".format(i - 1)]
-            dg2 = A2 * (1 - A2)
+            if self.activation == "sig":
+                dg2 = A2 * (1 - A2)
+            elif self.activation == "tanh":
+                dg2 = 1 - A2 ** 2
             dZ = (da) * dg2
             dW = np.matmul(dZ, A1.T)/len(A1[0])
             db = np.resize(np.sum(dZ, axis=1), (len(A2), 1))/(len(A1[0]))
