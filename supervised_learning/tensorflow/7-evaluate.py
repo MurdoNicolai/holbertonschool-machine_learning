@@ -18,10 +18,6 @@ def evaluate(X, Y, save_path):
     loss -- loss of the prediction
     """
 
-    # Import necessary functions
-    calculate_loss = __import__('4-calculate_loss').calculate_loss
-    calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
-
     # Load the model
     with tf.Session() as sess:
         saver = tf.train.import_meta_graph(save_path + '.meta')

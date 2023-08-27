@@ -3,6 +3,132 @@
 import tensorflow.compat.v1 as tf
 
 
+def create_placeholders(nx, classes):
+    """
+    Creates placeholders for input data and labels.
+
+    Arguments:
+    nx -- number of feature columns in the data
+    classes -- number of classes in the classifier
+
+    Returns:
+    x -- placeholder for input data
+    y -- placeholder for one-hot labels
+    """
+
+    x = tf.placeholder(tf.float32, shape=(None, nx), name="x")
+
+    y = tf.placeholder(tf.float32, shape=(None, classes), name="y")
+
+    return x, y
+
+
+def calculate_accuracy(y, y_pred):
+    """
+    Calculates the accuracy of a prediction.
+
+    Arguments:
+    y -- placeholder for the labels of the input data
+    y_pred -- tensor containing the network's predictions
+
+    Returns:
+    accuracy -- tensor containing the decimal accuracy of the prediction
+    """
+
+    # Calculate the number of correct predictions
+    correct_predictions = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
+
+    # Calculate the accuracy
+    accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32))
+
+    return accuracy
+
+
+def create_layer(prev, n, activation):
+    """
+    Creates a fully connected layer with specified activation.
+
+    Arguments:
+    prev -- tensor output of the previous layer
+    n -- number of nodes in the layer to create
+    activation -- activation function to use for the layer
+
+    Returns:
+    layer -- tensor output of the layer
+    """
+
+    # He initialization for the layer weights
+    initializer = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+
+    # Create the layer with specified number of nodes and activation
+    layer = tf.layers.dense(prev, units=n, activation=activation,
+                            kernel_initializer=initializer,
+                            name="layer")
+
+    return layer
+
+
+def calculate_accuracy(y, y_pred):
+    """
+    Calculates the accuracy of a prediction.
+
+    Arguments:
+    y -- placeholder for the labels of the input data
+    y_pred -- tensor containing the network's predictions
+
+    Returns:
+    accuracy -- tensor containing the decimal accuracy of the prediction
+    """
+
+    # Calculate the number of correct predictions
+    correct_predictions = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
+
+    # Calculate the accuracy
+    accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32))
+
+    return accuracy
+
+
+def create_train_op(loss, alpha):
+    """
+    Creates the training operation for the network.
+
+    Arguments:
+    loss -- the loss of the network's prediction
+    alpha -- the learning rate
+
+    Returns:
+    train_op -- an operation that trains the network using gradient descent
+    """
+
+    # Create the optimizer
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=alpha)
+
+    # Create the training operation
+    train_op = optimizer.minimize(loss)
+
+    return train_op
+
+
+def calculate_loss(y, y_pred):
+    """
+    Calculates the softmax cross-entropy loss of a prediction.
+
+    Arguments:
+    y -- placeholder for the labels of the input data
+    y_pred -- tensor containing the network's predictions
+
+    Returns:
+    loss -- tensor containing the loss of the prediction
+    """
+
+    # Calculate the softmax cross-entropy loss
+    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits
+                          (labels=y, logits=y_pred))
+
+    return loss
+
+
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
           activations, alpha, iterations, save_path="/tmp/model.ckpt"):
     """
@@ -22,14 +148,6 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     Returns:
     save_path -- the path where the model was saved
     """
-
-    # Import necessary functions
-    create_train_op = __import__('5-create_train_op').create_train_op
-    forward_prop = __import__('2-forward_prop').forward_prop
-    calculate_loss = __import__('4-calculate_loss').calculate_loss
-    calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
-    create_placeholders = \
-        __import__('0-create_placeholders').create_placeholders
 
     # Create placeholders
     x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
