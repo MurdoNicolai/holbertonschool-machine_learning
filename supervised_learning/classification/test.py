@@ -9,13 +9,13 @@ def one_hot(Y, classes):
     oh[Y, np.arange(Y.shape[0])] = 1
     return oh
 
-np.random.seed(6)
+np.random.seed(7)
 nx, m = np.random.randint(100, 200, 2).tolist()
 classes = np.random.randint(5, 20)
 X = np.random.randn(nx, m)
 Y = one_hot(np.random.randint(0, classes, m), classes)
 
-deep = Deep(nx, [100, 50, classes])
+deep = Deep(nx, [100, 50, classes], activation='tanh')
 A, cost = deep.train(X, Y, iterations=10, graph=False, verbose=False)
 np.set_printoptions(threshold=np.inf)
 A = A.astype(float)
