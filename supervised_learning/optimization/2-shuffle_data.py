@@ -5,7 +5,6 @@ import numpy as np
 
 def shuffle_data(X, Y):
     """" that shuffles the data points in two matrices the same way"""
-    print(X[0], Y[0])
     lenX = X[0].size
     fuse = np.concatenate((X, Y), axis=1)
     shuffle = np.random.permutation(fuse)
