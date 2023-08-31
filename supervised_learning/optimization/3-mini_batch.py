@@ -9,6 +9,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      save_path="/tmp/model.ckpt"):
     """ train a mini-batch with X_train data split into Batch_size batches"""
     # Import meta graph and restore session
+    load_path='./evaluate.ckpt'
     try:
         # Open the file to read its content (we're not actually reading content)
         with open(load_path, 'r') as file:
