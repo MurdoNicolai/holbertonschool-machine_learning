@@ -1,9 +1,19 @@
 #!/usr/bin/env python3
 
 import numpy as np
-import tensorflow.compat.v1 as tf
-tf.disable_eager_execution()
+import os
+
 train_mini_batch = __import__('3-mini_batch').train_mini_batch
+
+
+# Reproducibility
+def set_seed(seed=31415):
+    # os.environ["CUDA_VISIBLE_DEVICES"]="-1"
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    os.environ['TF_DETERMINISTIC_OPS'] = '1'
+
+    np.random.seed(seed)
+set_seed(3)
 
 def one_hot(Y, classes):
     """convert an array to a one-hot matrix"""
@@ -11,24 +21,17 @@ def one_hot(Y, classes):
     oh[np.arange(Y.shape[0]), Y] = 1
     return oh
 
-if __name__ == '__main__':
-    lib= np.load('../data/MNIST.npz')
-    X_train_3D = lib['X_train']
-    Y_train = lib['Y_train']
-    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1))
-    Y_train_oh = one_hot(Y_train, 10)
-    X_valid_3D = lib['X_valid']
-    Y_valid = lib['Y_valid']
-    X_valid = X_valid_3D.reshape((X_valid_3D.shape[0], -1))
-    Y_valid_oh = one_hot(Y_valid, 10)
-
-    layer_sizes = [256, 256, 10]
-    activations = [tf.nn.tanh, tf.nn.tanh, None]
-    alpha = 0.01
-    iterations = 5000
-
-    np.random.seed(0)
-    save_path = train_mini_batch(X_train, Y_train_oh, X_valid, Y_valid_oh,
-                                 epochs=10, load_path='./graph.ckpt',
-                                 save_path='./model.ckpt')
-    print('Model saved in path: {}'.format(save_path))
+# set variables
+s1, s2 = np.random.randint(15, 50, 2)
+b1, b2 = np.random.randint(100, 200, 2)
+b = np.random.randint(4, 10)
+e1 = s1 + (b1 * (2 ** b))
+e2 = s2 + (b2 * (2 ** b))
+c = 10
+lib= np.load('../data/MNIST.npz')
+X_train = lib['X_train'][s1:e1].reshape((e1 - s1, -1))
+Y_train = one_hot(lib['Y_train'][s1:e1], c)
+X_valid = lib['X_valid'][s2:e2].reshape((e2 - s2, -1))
+Y_valid = one_hot(lib['Y_valid'][s2:e2], c)
+train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=(2 ** b),
+                 epochs=1, load_path='./evaluate.ckpt', save_path='./test.ckpt')
