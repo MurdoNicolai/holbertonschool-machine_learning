@@ -21,7 +21,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
-
         train_cost, train_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_train,
                                                          y: Y_train})
@@ -51,7 +50,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 if step % (100 * batch_size) == 0 and (step != 0):
                     print("\tStep {}:\n\t\tCost: {},\n\t\tAccuracy: {}".format(
                           int(step/batch_size), step_cost, step_accuracy))
-
 
             train_cost, train_accuracy = sess.run([loss, accuracy],
                                                   feed_dict={x: X_train,
