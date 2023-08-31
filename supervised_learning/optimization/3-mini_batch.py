@@ -9,8 +9,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      save_path="/tmp/model.ckpt"):
     """ train a mini-batch with X_train data split into Batch_size batches"""
     # Import meta graph and restore session
-    tf.reset_default_graph()
-    saver = tf.train.import_meta_graph(load_path + ".meta")
     try:
         # Open the file to read its content (we're not actually reading content)
         with open(load_path, 'r') as file:
@@ -49,6 +47,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("Last Modified:", formatted_time)
     except FileNotFoundError:
         print("File not found")
+    tf.reset_default_graph()
+    saver = tf.train.import_meta_graph(load_path + ".meta")
     with tf.Session() as sess:
         # Restore session
         saver.restore(sess, load_path)
