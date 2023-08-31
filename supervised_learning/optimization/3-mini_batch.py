@@ -13,39 +13,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
     try:
         # Open the file to read its content (we're not actually reading content)
         with open(load_path, 'r') as file:
-            file_size = file.seek(0, 2)  # Seek to end of file to get size
-            file_mtime = file.seek(0)    # Seek back to beginning for other operations
-
-            print("File Size:", file_size, "bytes")
-            print("Last Modified:", file_mtime)
-
-            # Retrieve file name and extension
-            file_name = load_path.split('/')[-1]  # Split by '/' for path separation
-            file_name_parts = file_name.split('.')
-            if len(file_name_parts) > 1:
-                file_extension = file_name_parts[-1]
-            else:
-                file_extension = None
-
-            print("File Name:", file_name)
-            print("File Extension:", file_extension)
-
-            # Retrieve directory and base filename
-            directory = '/'.join(load_path.split('/')[:-1])
-            base_filename = file_name
-
-            print("Directory:", directory)
-            print("Base Filename:", base_filename)
-
-            # Retrieve last modified time
-            formatted_time = "Unknown"  # Default value if modification time is not available
-            if file_mtime:
-                formatted_time = "Not supported without additional imports"
-                # You would need external libraries for accurate conversion
-                # For example, datetime module for conversion
-                # formatted_time = datetime.datetime.fromtimestamp(file_mtime).strftime('%Y-%m-%d %H:%M:%S')
-
-            print("Last Modified:", formatted_time)
+            print(file.read())
     except FileNotFoundError:
         print("File not found")
     tf.reset_default_graph()
