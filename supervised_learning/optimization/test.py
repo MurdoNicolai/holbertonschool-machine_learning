@@ -34,4 +34,4 @@ Y_train = one_hot(lib['Y_train'][s1:e1], c)
 X_valid = lib['X_valid'][s2:e2].reshape((e2 - s2, -1))
 Y_valid = one_hot(lib['Y_valid'][s2:e2], c)
 train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=(2 ** b),
-                 epochs=1, load_path='./evaluate.ckpt', save_path='./test.ckpt')
+                 epochs=1, load_path='./evaluate.chpt', save_path='./test.chpt')

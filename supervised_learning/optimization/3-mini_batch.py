@@ -9,32 +9,11 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      save_path="/tmp/model.ckpt"):
     """ train a mini-batch with X_train data split into Batch_size batches"""
     # Import meta graph and restore session
-    meta_file_path ="./evaluate.chpt.meta"
-    possible_encodings = ['utf-8', 'latin-1', 'utf-16', 'cp1252', 'iso-8859-1', 'utf-32']  # Add more encodings as needed
 
-    found_encoding = None
-    content = None
-
-    for encoding in possible_encodings:
-        try:
-            with open(meta_file_path, 'r', encoding=encoding) as meta_file:
-                content = repr(meta_file.read())
-                found_encoding = encoding
-                break  # Stop when a valid encoding is found
-        except FileNotFoundError:
-            print("Meta file not found")
-            break  # Exit the loop if the file is not found
-        except UnicodeDecodeError:
-            print(f"Failed with encoding: {encoding}")
-
-    if content is not None:
-        print(f"Content using encoding '{found_encoding}':")
-        print(content)
-    else:
-        print("Failed to read the content with any encoding.")
-    return(0)
     tf.reset_default_graph()
-    saver = tf.train.import_meta_graph(load_path + ".meta")
+    saver = tf.train.import_meta_graph(load_path + ".meta",
+                                       import_scope=None, clear_devices=True)
+
     with tf.Session() as sess:
         # Restore session
         saver.restore(sess, load_path)
