@@ -18,7 +18,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
     for encoding in possible_encodings:
         try:
             with open(meta_file_path, 'r', encoding=encoding) as meta_file:
-                content = meta_file.read()
+                content = repr(meta_file.read())
                 found_encoding = encoding
                 break  # Stop when a valid encoding is found
         except FileNotFoundError:
