@@ -27,7 +27,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         tf.add_to_collection('accuracy', accuracy)
         tf.add_to_collection('train_op', train_op)
 
-        train_cost, train_accuracy = sess.run([loss, accuracy],
+        _, train_cost, train_accuracy = sess.run([train_op,loss, accuracy],
                                               feed_dict={x: X_train,
                                                          y: Y_train})
         _, valid_cost, valid_accuracy = sess.run([train_op, loss, accuracy],
