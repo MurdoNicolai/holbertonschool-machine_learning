@@ -21,10 +21,16 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
+        tf.add_to_collection('x', x)
+        tf.add_to_collection('y', y)
+        tf.add_to_collection('loss', loss)
+        tf.add_to_collection('accuracy', accuracy)
+        tf.add_to_collection('train_op', train_op)
+
         train_cost, train_accuracy = sess.run([loss, accuracy],
                                               feed_dict={x: X_train,
                                                          y: Y_train})
-        valid_cost, valid_accuracy = sess.run([loss, accuracy],
+        _, valid_cost, valid_accuracy = sess.run([train_op, loss, accuracy],
                                               feed_dict={x: X_valid,
                                                          y: Y_valid})
         print("After {} epochs:".format(0))
@@ -42,7 +48,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 X_batch = X_train[step:end]
                 Y_batch = Y_train[step:end]
 
-                step_cost, step_accuracy = sess.run([loss, accuracy],
+                _, step_cost, step_accuracy = sess.run([train_op, loss, accuracy],
                                                     feed_dict={x: X_batch,
                                                                y: Y_batch})
 
@@ -50,10 +56,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     print("\tStep {}:\n\t\tCost: {},\n\t\tAccuracy: {}".format(
                           int(step/batch_size), step_cost, step_accuracy))
 
-            train_cost, train_accuracy = sess.run([loss, accuracy],
+            _, train_cost, train_accuracy = sess.run([train_op, loss, accuracy],
                                                   feed_dict={x: X_train,
                                                              y: Y_train})
-            valid_cost, valid_accuracy = sess.run([loss, accuracy],
+            _, valid_cost, valid_accuracy = sess.run([train_op, loss, accuracy],
                                                   feed_dict={x: X_valid,
                                                              y: Y_valid})
 
