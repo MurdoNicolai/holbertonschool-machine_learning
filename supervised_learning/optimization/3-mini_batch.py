@@ -31,7 +31,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
               train_cost, train_accuracy))
         print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
               valid_cost, valid_accuracy))
-        return 0
+
         m = X_train.shape[0]
         for epoch in range(epochs):
             X_train, Y_train = shuffle_data(X_train, Y_train)
@@ -49,12 +49,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     print("\tStep {}:\n\t\tCost: {},\n\t\tAccuracy: {}".format(
                           int(step/batch_size), step_cost, step_accuracy))
 
-            _, train_cost, train_accuracy = sess.run([train_op, loss, accuracy],
-                                                  feed_dict={x: X_train,
-                                                             y: Y_train})
-            _, valid_cost, valid_accuracy = sess.run([train_op, loss, accuracy],
-                                                  feed_dict={x: X_valid,
-                                                             y: Y_valid})
+            train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+            train_accuracy = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
+            valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            valid_accuracy = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
 
             print("After {} epochs:".format(epoch + 1))
             print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
