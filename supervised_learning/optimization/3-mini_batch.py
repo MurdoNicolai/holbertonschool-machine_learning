@@ -41,9 +41,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 X_batch = X_train[step:end]
                 Y_batch = Y_train[step:end]
 
-                # if step % (100 * batch_size) == 0 and (step != 0):
-                #     print("\tStep {}:\n\t\tCost: {}\n\t\tAccuracy: {}".format(
-                #           int(step/batch_size), step_cost, step_accuracy))
+                if step % (100 * batch_size) == 0 and (step != 0):
+                    print("\tStep {}:\n\t\tCost: {}\n\t\tAccuracy: {}".format(
+                          int(step/batch_size), step_cost, step_accuracy))
                 sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
                 step_cost = sess.run(loss,
                                      feed_dict={x: X_batch, y: Y_batch})
@@ -65,7 +65,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
                   valid_cost, valid_accuracy))
 
-            train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
+            train_cost, train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
             valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
 
             print("After {} epochs:".format(epoch + 1))
