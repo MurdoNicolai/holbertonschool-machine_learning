@@ -40,14 +40,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 end = step + batch_size
                 X_batch = X_train[step:end]
                 Y_batch = Y_train[step:end]
-                _, step_cost = sess.run([train_op, loss],
-                                        feed_dict={x: X_batch, y: Y_batch})
-                _, step_accuracy = sess.run([train_op, accuracy],
-                                            feed_dict={x: X_batch, y: Y_batch})
+                _, step_cost, step_accuracy = sess.run(
+                    [train_op, loss, accuracy],
+                    feed_dict={x: X_batch, y: Y_batch})
 
                 if step % (100 * batch_size) == 0 and (step != 0):
                     print("\tStep {}:\n\t\tCost: {},\n\t\tAccuracy: {}".format(
                           int(step/batch_size), step_cost, step_accuracy))
+                    return 0
 
             train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
             train_accuracy = sess.run(accuracy, feed_dict={x: X_train,
