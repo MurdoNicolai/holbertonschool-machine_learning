@@ -35,11 +35,13 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         m = X_train.shape[0]
         for epoch in range(epochs):
             X_train, Y_train = shuffle_data(X_train, Y_train)
+            X_train, Y_train = shuffle_data(X_train, Y_train)
 
             for step in range(0, m, batch_size):
                 end = step + batch_size
                 X_batch = X_train[step:end]
                 Y_batch = Y_train[step:end]
+
                 _, step_cost, step_accuracy = sess.run(
                     [train_op, loss, accuracy],
                     feed_dict={x: X_batch, y: Y_batch})
