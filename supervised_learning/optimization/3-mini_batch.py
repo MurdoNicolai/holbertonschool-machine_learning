@@ -46,22 +46,21 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                           int(step/batch_size), step_cost, step_accuracy))
                 sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
                 step_cost = sess.run(loss,
-                                        feed_dict={x: X_batch, y: Y_batch})
+                                     feed_dict={x: X_batch, y: Y_batch})
                 step_accuracy = sess.run(accuracy,
                                          feed_dict={x: X_batch, y: Y_batch})
 
-            train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-            train_accuracy = sess.run(accuracy, feed_dict={x: X_train,
-                                                           y: Y_train})
-            valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            valid_accuracy = sess.run(accuracy, feed_dict={x: X_valid,
-                                                           y: Y_valid})
+            train_cost, train_accuracy = sess.run([loss, accuracy], feed_dict={
+                                                  x: X_train, y: Y_train})
+            valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={
+                                                  x: X_valid, y: Y_valid})
 
             print("After {} epochs:".format(epoch + 1))
             print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
                   train_cost, train_accuracy))
             print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
                   valid_cost, valid_accuracy))
+            return 0
 
         saver.save(sess, save_path)
 
