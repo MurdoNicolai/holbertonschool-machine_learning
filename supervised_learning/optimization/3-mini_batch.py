@@ -21,24 +21,17 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
-        tf.add_to_collection('x', x)
-        tf.add_to_collection('y', y)
-        tf.add_to_collection('loss', loss)
-        tf.add_to_collection('accuracy', accuracy)
-        tf.add_to_collection('train_op', train_op)
+        train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+        train_accuracy = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
+        valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+        valid_accuracy = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
 
-        _, train_cost, train_accuracy = sess.run([train_op,loss, accuracy],
-                                              feed_dict={x: X_train,
-                                                         y: Y_train})
-        _, valid_cost, valid_accuracy = sess.run([train_op, loss, accuracy],
-                                              feed_dict={x: X_valid,
-                                                         y: Y_valid})
         print("After {} epochs:".format(0))
         print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
               train_cost, train_accuracy))
         print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
               valid_cost, valid_accuracy))
-
+        return 0
         m = X_train.shape[0]
         for epoch in range(epochs):
             X_train, Y_train = shuffle_data(X_train, Y_train)
