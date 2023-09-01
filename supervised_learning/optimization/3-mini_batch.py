@@ -4,6 +4,7 @@ import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 tf.disable_eager_execution()
 
+
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      epochs=5, load_path="/tmp/model.ckpt",
                      save_path="/tmp/model.ckpt"):
@@ -20,8 +21,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
 
-        train_cost, train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
-        valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
+        train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
+        train_accuracy = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
+        valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+        valid_accuracy = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
 
         print("After {} epochs:".format(0))
         print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
@@ -38,11 +41,23 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 X_batch = X_train[step:end]
                 Y_batch = Y_train[step:end]
 
-                # Combine train_op and fetch step_cost and step_accuracy
-                _, step_cost, step_accuracy = sess.run([train_op, loss, accuracy], feed_dict={x: X_batch, y: Y_batch})
+                # if step % (100 * batch_size) == 0 and (step != 0):
+                #     print("\tStep {}:\n\t\tCost: {}\n\t\tAccuracy: {}".format(
+                #           int(step/batch_size), step_cost, step_accuracy))
+                sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
+                step_cost = sess.run(loss,
+                                     feed_dict={x: X_batch, y: Y_batch})
+                step_accuracy = sess.run(accuracy,
+                                         feed_dict={x: X_batch, y: Y_batch})
 
-            train_cost, train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
-            valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
+            train_cost = sess.run(loss,
+                                  feed_dict={x: X_train, y: Y_train})
+            train_accuracy = sess.run(accuracy,
+                                      feed_dict={x: X_train, y: Y_train})
+            valid_cost = sess.run(loss,
+                                  feed_dict={x: X_valid, y: Y_valid})
+            valid_accuracy = sess.run(accuracy,
+                                      feed_dict={x: X_valid, y: Y_valid})
 
             print("After {} epochs:".format(epoch + 1))
             print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
@@ -50,7 +65,16 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
                   valid_cost, valid_accuracy))
 
-        # Save the model after all epochs
+            train_accuracy = sess.run([loss, accuracy], feed_dict={x: X_train, y: Y_train})
+            valid_cost, valid_accuracy = sess.run([loss, accuracy], feed_dict={x: X_valid, y: Y_valid})
+
+            print("After {} epochs:".format(epoch + 1))
+            print("\tTraining Cost: {}\n\tTraining Accuracy: {}".format(
+                  train_cost, train_accuracy))
+            print("\tValidation Cost: {}\n\tValidation Accuracy: {}".format(
+                  valid_cost, valid_accuracy))
+            return 0
+
         saver.save(sess, save_path)
 
     return save_path
