@@ -9,7 +9,9 @@ def create_batch_norm_layer(prev, n, activation):
 
     """
     # Create a Dense layer with n nodes
-    dense_layer = tf.keras.layers.Dense(n, kernel_initializer=tf.keras.initializers.VarianceScaling(mode='fan_avg'))
+    dense_layer = tf.keras.layers.Dense(
+        n, kernel_initializer=tf.keras.initializers.VarianceScaling(
+            mode='fan_avg'))
 
     # Apply the Dense layer to the previous output
     x = dense_layer(prev)
