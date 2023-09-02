@@ -9,8 +9,6 @@ def moving_average(data, beta):
     moving_average = []
     for number in data:
         total_numbers += 1
-        print((beta * Average), ((1 - beta) * number),
-              (1 - beta**total_numbers))
         Average = ((beta * Average) + ((1 - beta) * number))
 
         moving_average.append(Average/(1 - beta ** total_numbers))
