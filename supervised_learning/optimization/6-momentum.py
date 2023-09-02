@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ moving average"""
-import numpy as np
 import tensorflow as tf
 
 def create_momentum_op(loss, alpha, beta1):
