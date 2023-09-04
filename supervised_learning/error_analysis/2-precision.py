@@ -9,5 +9,5 @@ def precision(confusion):
     for nb in range(len(confusion)):
         positivs = confusion[nb][nb]
         supposed_positivs = np.sum(confusion.T[nb])
-        result[nb] = positivs/predicted_positivs
+        result[nb] = positivs/supposed_positivs
     return result
