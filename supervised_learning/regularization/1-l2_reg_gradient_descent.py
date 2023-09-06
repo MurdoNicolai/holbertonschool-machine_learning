@@ -22,4 +22,4 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
 
         dg2 = 1 - A_prev ** 2
         dZ = (da) * dg2
-    return (newweights)
+    weights.update(newweights)
