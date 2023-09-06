@@ -8,4 +8,4 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
     weights_sum = 0
     for value in weights.values():
         weights_sum += np.sum(np.multiply(value, value))
-    return (weights_sum/(m*(L-1)) * lambtha + cost)
+    return (weights_sum/(2*m) * lambtha + cost)
