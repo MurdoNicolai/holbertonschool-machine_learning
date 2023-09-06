@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """containst reg_cost functino"""
 import numpy as np
-import tensorflow.compat.v1 as tf
 
 
 def l2_reg_cost(cost, lambtha, weights, L, m):
