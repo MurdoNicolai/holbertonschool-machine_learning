@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
-"""containst gradient_descent functino"""
+"""containst reg_cost functino"""
 import numpy as np
-import tensorflow.compat.v1 as tf
 
 
 def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
-    """ updates the weights and biases of a neural network
-    using gradient descent with L2 regularization"""
-    weights_sum = 0
-    for key, value in weights.items():
-        if key[:1] == 'W':
-            weights_sum += np.sum(np.multiply(value, value))
-    return (weights_sum/(2*m) * lambtha + cost)
+    """ calculates the cost of a neural network with L2 regularization"""
+    A = cache["A{}".format(len(cache) - 1)]
+    dZ = A - Y
+    newweights = {}
+    for i in range(L, 0, -1):
+        A_prev = cache["A{}".format(i - 1)]
+
+        dW = np.matmul(dZ, A_prev .T)/len(A_prev[0])
+        db = np.sum(dZ, axis=1, keepdims=True) / len(A_prev[0])
+        da = np.matmul(weights["W{}".format(i)].T, dZ)
+        dW += (lambtha / len(A_prev[0])) * weights["W{}".format(i)]
+        newweights.update({"W{}".format(i):
+                          weights["W{}".format(i)] - alpha * dW})
+        newweights.update({"b{}".format(i):
+                          weights["b{}".format(i)] - alpha * db})
+
+        dg2 = 1 - A_prev ** 2
+        dZ = (da) * dg2
+    return (newweights)
