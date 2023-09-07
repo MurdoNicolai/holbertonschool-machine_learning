@@ -4,7 +4,7 @@ import numpy as np
 
 
 def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
-    """ calculates the cost of a neural network with L2 regularization"""
+    """ gradient descends weights"""
     A = cache["A{}".format(len(cache) - 1)]
     dZ = A - Y
     newweights = {}

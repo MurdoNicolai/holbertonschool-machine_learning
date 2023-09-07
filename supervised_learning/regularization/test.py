@@ -1,39 +1,42 @@
 #!/usr/bin/env python3
 
 import numpy as np
-l2_reg_gradient_descent = __import__('1-l2_reg_gradient_descent').l2_reg_gradient_descent
-
+import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
+l2_reg_cost = __import__('2-l2_reg_cost').l2_reg_cost
 
 def one_hot(Y, classes):
     """convert an array to a one-hot matrix"""
     m = Y.shape[0]
-    one_hot = np.zeros((classes, m))
-    one_hot[Y, np.arange(m)] = 1
-    return one_hot
+    oh = np.zeros((classes, m))
+    oh[Y, np.arange(m)] = 1
+    return oh
 
-if __name__ == '__main__':
-    lib= np.load('../data/MNIST.npz')
-    X_train_3D = lib['X_train']
-    Y_train = lib['Y_train']
-    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1)).T
-    Y_train_oh = one_hot(Y_train, 10)
+np.random.seed(4)
+m = np.random.randint(1000, 2000)
+c = 10
+lib= np.load('../data/MNIST.npz')
 
-    np.random.seed(0)
+X = lib['X_train'][:m].reshape((m, -1))
+Y = one_hot(lib['Y_train'][:m], c).T
 
-    weights = {}
-    weights['W1'] = np.random.randn(256, 784)
-    weights['b1'] = np.zeros((256, 1))
-    weights['W2'] = np.random.randn(128, 256)
-    weights['b2'] = np.zeros((128, 1))
-    weights['W3'] = np.random.randn(10, 128)
-    weights['b3'] = np.zeros((10, 1))
+n0 = X.shape[1]
+n1, n2 = np.random.randint(10, 1000, 2)
 
-    cache = {}
-    cache['A0'] = X_train
-    cache['A1'] = np.tanh(np.matmul(weights['W1'], cache['A0']) + weights['b1'])
-    cache['A2'] = np.tanh(np.matmul(weights['W2'], cache['A1']) + weights['b2'])
-    Z3 = np.matmul(weights['W3'], cache['A2']) + weights['b3']
-    cache['A3'] = np.exp(Z3) / np.sum(np.exp(Z3), axis=0)
-    print(weights['W1'])
-    l2_reg_gradient_descent(Y_train_oh, weights, cache, 0.1, 0.1, 3)
-    print(weights['W1'])
+lam = 0.09
+tf.set_random_seed(0)
+
+x = tf.placeholder(tf.float32, (None, n0))
+y = tf.placeholder(tf.float32, (None, c))
+
+a1 = tf.layers.Dense(n1, activation=tf.nn.tanh, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(x)
+a2 = tf.layers.Dense(n2, activation=tf.nn.sigmoid, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(a1)
+y_pred = tf.layers.Dense(c, activation=None, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")), kernel_regularizer=tf.keras.regularizers.L2(lam))(a2)
+
+cost = tf.losses.softmax_cross_entropy(y, y_pred)
+
+l2_cost = l2_reg_cost(cost)
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(sess.run(l2_cost, feed_dict={x: X, y: Y}))
