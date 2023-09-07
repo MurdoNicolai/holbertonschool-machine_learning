@@ -5,10 +5,12 @@ import tensorflow.compat.v1 as tf
 
 def l2_reg_cost(cost):
     """ calculates the cost of a neural network with L2 regularization"""
-    trainable_vars = tf.trainable_variables()
-    l2_reg_term = [tf.nn.l2_loss(var) for var in trainable_vars]
+    reg_losses = tf.compat.v1.losses.get_regularization_losses()
 
-    cost_with_l2_reg = cost + (1 / 2.0) * l2_reg_term
+    # Sum up the regularization losses
+    total_reg_loss = tf.add_n(reg_losses)
 
-    return cost_with_l2_reg
+    # Add regularization to the original loss
+    total_loss = cost + total_reg_loss
 
+    return total_loss
