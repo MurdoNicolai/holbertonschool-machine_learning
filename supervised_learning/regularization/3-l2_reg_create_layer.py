@@ -10,7 +10,8 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     Returns:
     The output of the new layer.
     """
+    print(lambtha)
     dense_layer = tf.layers.dense(prev, units=n, activation=activation,
                                   kernel_regularizer=tf.keras.
-                                  regularizers.L2(lambtha*2))
+                                  regularizers.L2(lambtha**0.5))
     return dense_layer
