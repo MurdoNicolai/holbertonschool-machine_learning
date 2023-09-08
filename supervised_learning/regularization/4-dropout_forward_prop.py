@@ -10,22 +10,19 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
     cache = {}
     A = X
-
-    for layer in range(1, L + 1):
-        W = weights['W' + str(layer)]
-        b = weights['b' + str(layer)]
-
-        Z = np.dot(W, A) + b
-        if layer < L:
-            A = np.tanh(Z)
-            D = np.random.rand(A.shape[0], A.shape[1]) < keep_prob
+    w_nb = 0
+    while w_nb < L:
+        w_nb = w_nb + 1
+        Z = (np.matmul(weights["W{}".format(w_nb)], X) +
+             weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
+        if w_nb < L:
+            D = int(np.random.rand(A.shape[0], A.shape[1]) < keep_prob)
             A *= D
-            A /= keep_prob
-            cache['D' + str(layer)] = D
+            A = np.tanh(Z)
+            cache['D' + str(w_nb)] = D
         else:
-            A = np.exp(Z - np.max(Z)) / np.sum(np.exp(Z - np.max(Z)),
-                                               axis=0, keepdims=True)
-
-        cache['A' + str(layer)] = A
-
-    return cache
+            exp_Z = np.exp(Z)
+            A = exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
+        cache.update({"A{}".format(w_nb): A})
+        X = cache["A{}".format(w_nb)]
+    return (cache)
