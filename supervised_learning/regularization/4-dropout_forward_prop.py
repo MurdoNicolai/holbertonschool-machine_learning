@@ -8,7 +8,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     Conduct forward propagation using Dropout.
     """
 
-    cache = {}
+    cache = {"A0":X}
     A = X
     w_nb = 0
     while w_nb < L:
@@ -16,9 +16,11 @@ def dropout_forward_prop(X, weights, L, keep_prob):
         Z = (np.matmul(weights["W{}".format(w_nb)], X) +
              weights["b{}".format(w_nb)] * np.ones((1, len(X[0]))))
         if w_nb < L:
-            D = int(np.random.rand(A.shape[0], A.shape[1]) < keep_prob)
-            A *= D
             A = np.tanh(Z)
+            D = np.random.rand(A.shape[0], A.shape[1]) < keep_prob
+            D = np.ones(D.shape)*D
+            A *= D
+            A /= keep_prob
             cache['D' + str(w_nb)] = D
         else:
             exp_Z = np.exp(Z)
