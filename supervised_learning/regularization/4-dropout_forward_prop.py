@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+""" contains dropout_forward_prop"""
 import numpy as np
+
 
 def dropout_forward_prop(X, weights, L, keep_prob):
     """
@@ -20,7 +23,8 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             A /= keep_prob
             cache['D' + str(layer)] = D
         else:
-            A = np.exp(Z - np.max(Z)) / np.sum(np.exp(Z - np.max(Z)), axis=0, keepdims=True)
+            A = np.exp(Z - np.max(Z)) / np.sum(np.exp(Z - np.max(Z)),
+                                               axis=0, keepdims=True)
 
         cache['A' + str(layer)] = A
 
