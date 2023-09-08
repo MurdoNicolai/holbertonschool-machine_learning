@@ -10,7 +10,10 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     Returns:
     The output of the new layer.
     """
-    dense_layer = tf.layers.dense(units=n, activation=activation,
+    dense_layer = tf.layers.dense(prev, units=n, activation=activation,
+                                  kernel_initializer=tf.
+                                  keras.initializers.
+                                  VarianceScaling(scale=2.0, mode=("fan_avg")),
                                   kernel_regularizer=tf.
                                   keras.regularizers.L2(lambtha))
-    return dense_layer(prev)
+    return dense_layer
