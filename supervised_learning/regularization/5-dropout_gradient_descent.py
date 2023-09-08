@@ -5,7 +5,7 @@ import numpy as np
 
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     """ gradient descends weights"""
-    A = cache["A{}".format(len(cache) - 1)]
+    A = cache["A{}".format(int(len(cache)/2))]
     dZ = A - Y
     newweights = {}
     for i in range(L, 0, -1):
