@@ -1,23 +1,19 @@
+#!/usr/bin/env python3
 import tensorflow.keras as K
+
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
     """Builds a neural network with the Keras library"""
 
-    # Create a Sequential model
     model = K.Sequential()
-
-    # Iterate through the layers and activations
-    for layer_size, activation in zip(layers, activations):
-        # Add a Dense layer with L2 regularization
-        model.add(K.layers.Dense(
-            layer_size,
-            activation=activation,
-            kernel_regularizer=K.regularizers.l2(lambtha),
-            input_shape=(nx,) if not model.layers else ()
-        ))
-
-        # Add Dropout layer (if keep_prob < 1.0)
-        if keep_prob < 1.0:
+    first_layer = True
+    for layer, activation in zip(layers, activations):
+        if first_layer:
+            model.add(K.layers.Dense(layer, activation=activation,
+                                     input_shape=(nx,),
+                                     kernel_regularizer=K.regularizers.
+                                     l2(lambtha)))
+            first_layer = False
             model.add(K.layers.Dropout(1 - keep_prob))
-
-    return model
+        else:
+            model.add(K.layers.Dense(layer, activation=activation))
