@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+import tensorflow.keras as K
+
+
+def build_model(nx, layers, activations, lambtha, keep_prob):
+    """Builds a neural network with the Keras library"""
+
+    model = K.Sequential()
+    first_layer = True
+    for layer, activation in layers, activations:
+        if first_layer:
+            model.add(K.layers.Dense(layer, activation=activation),
+                      input_shape=(nx,),
+                      kernel_regularizer=K.regularizers.l2(0.01))
+            first_layer = False
+            model.add(K.layers.Dropout(0.5))
+        else:
+            model.add(K.layers.Dense(layer, activation=activation))
+
+
