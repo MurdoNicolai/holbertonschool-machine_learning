@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import numpy as np
+""" has the build model"""
 import tensorflow.keras as K
 
 
