@@ -10,6 +10,7 @@ def save_config(network, filename):
     with open(filename, 'w') as config_file:
         config_file.write(network.to_yaml())
 
+
 def load_config(filename):
     """
     Loads a model with a specific configuration from a file.
