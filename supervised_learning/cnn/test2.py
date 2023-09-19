@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
+
 import numpy as np
+conv_forward = __import__('0-conv_forward').conv_forward
 
-# Create a 4x3x4x2 matrix (assuming 'matrix' is your matrix)
-matrix = np.zeros((4, 3, 4, 2))  # Example random matrix
+np.random.seed(0)
+m = np.random.randint(100, 200)
+h, w = np.random.randint(20, 50, 2).tolist()
+cin = np.random.randint(2, 5)
+cout = np.random.randint(5, 10)
+fh, fw = (np.random.randint(2, 5, 2)).tolist()
+sh, sw = (np.random.randint(2, 4, 2)).tolist()
 
-# Create a 4x1x2 value (assuming 'value' is your value)
-value = np.array([[1,2],[3,4],[5,6],[7,8]])  # Example random value
-
-# Assign the value to the specified positions (allx2x2xall)
-matrix[:, 2, 2, :] = value
-
-print(matrix[0][0])
-print(matrix[0][2])
-print(matrix[1][0])
-print(matrix[1][2])
+X = np.random.uniform(0, 1, (m, h, w, cin))
+W = np.random.uniform(0, 1, (fh, fw, cin, cout))
+b = np.random.uniform(0, 1, (1, 1, 1, cout))
+Y = conv_forward(X, W, b, np.tanh, padding="same", stride=(sh, sw))
+np.set_printoptions(threshold=np.inf)
+# print(Y[50:55])
+print(sh, sw)
+print(Y.shape)
