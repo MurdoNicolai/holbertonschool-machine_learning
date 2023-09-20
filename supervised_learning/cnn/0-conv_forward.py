@@ -44,4 +44,4 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
             result[:, (pos_h + 1) // stride[0] - 1,
                    (pos_w + 1) // stride[1] - 1, :] = activation(sum)
 
-    return result
+    return None
