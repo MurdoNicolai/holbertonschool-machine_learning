@@ -19,3 +19,5 @@ np.set_printoptions(threshold=np.inf)
 print(Y[50:55])
 print(X.shape)
 print(Y.shape)
+with open('file.txt', 'w') as file:
+  file.write(str(Y[50:55]))

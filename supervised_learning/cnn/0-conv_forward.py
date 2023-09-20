@@ -8,8 +8,10 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
        layer of a neural network:"""
     filter_height, filter_width = W.shape[0], W.shape[1]
     if padding == "same":
-        padding_height = (len(A_prev[0]) - 1) * stride[0] - len(A_prev[0]) + filter_height
-        padding_width = (len(A_prev[0][0]) - 1) * stride[1] - len(A_prev[0][0]) + filter_width
+        padding_height = ((len(A_prev[0]) - 1) * stride[0] -
+                          len(A_prev[0]) + filter_height)
+        padding_width = ((len(A_prev[0][0]) - 1) * stride[1] -
+                         len(A_prev[0][0]) + filter_width)
         ph1 = int(padding_height/2)
         ph2 = int(padding_height - int(padding_height/2))
         pw1 = int(padding_width/2)
@@ -20,9 +22,11 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     elif padding == "valid":
         padding_height = (len(A_prev[0]) - filter_height) % stride[0]
         padding_width = (len(A_prev[0][0]) - filter_width) % stride[1]
-        X = A_prev[:, 0:len(A_prev[0])-padding_height, 0:len(A_prev[0][0])-padding_width, :]
+        X = A_prev[:, 0:len(A_prev[0])-padding_height,
+                   0:len(A_prev[0][0])-padding_width, :]
     else:
         print("padding musit be valid or same")
+
     bgW = np.expand_dims(W, axis=0)
     bgW = np.repeat(bgW, len(X), axis=0)
     bgb = np.expand_dims(b, axis=0)
@@ -41,7 +45,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
             bgextrait = np.repeat(bgextrait, len(W[0][0][0]), axis=-1)
 
             sum = np.sum(np.multiply(bgW, bgextrait), axis=(1, 2, 3)) + bgb
-            result[:, (pos_h + 1) // stride[0] - 1,
-                   (pos_w + 1) // stride[1] - 1, :] = activation(sum)
+            result[:, pos_h // stride[0],
+                   pos_w // stride[1], :] = activation(sum)
 
-    return None
+    return result
