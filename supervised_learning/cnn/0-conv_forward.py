@@ -8,12 +8,12 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
        layer of a neural network:"""
     filter_height, filter_width = W.shape[0], W.shape[1]
     if padding == "same":
-        padding_height = filter_height - ((len(A_prev[0]) - 1) % stride[0])
-        padding_width = filter_width - ((len(A_prev[0][0]) - 1) % stride[1])
-        ph1 = (int(padding_height/2))
-        ph2 = (padding_height - int(padding_height/2))
-        pw1 = (int(padding_width/2))
-        pw2 = (padding_width - int(padding_width/2))
+        padding_height = (len(A_prev[0]) - 1) * stride[0] - len(A_prev[0]) + filter_height
+        padding_width = (len(A_prev[0][0]) - 1) * stride[1] - len(A_prev[0][0]) + filter_width
+        ph1 = int(padding_height/2)
+        ph2 = int(padding_height - int(padding_height/2))
+        pw1 = int(padding_width/2)
+        pw2 = int(padding_width - int(padding_width/2))
         X = np.pad(A_prev,
                    [(0, 0), (ph1, ph2), (pw1, pw2), (0, 0)],
                    mode='constant')
