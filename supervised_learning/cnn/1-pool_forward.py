@@ -10,7 +10,7 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode='max'):
     X = A_prev
     result = np.zeros((len(X), ((len(X[0]) - filter_height) // stride[0]) + 1,
                        ((len(X[0][0]) - filter_width) // stride[1]) + 1,
-                       len(X[0][0][0])) )
+                       len(X[0][0][0])))
     for pos_h in range(0, len(X[0]) + 1 - filter_height, stride[0]):
         for pos_w in range(0, len(X[0][0]) + 1 - filter_width, stride[1]):
             extrait = X[:, pos_h:(pos_h + filter_height),
@@ -18,7 +18,7 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode='max'):
             if mode == 'max':
                 sum = np.max(extrait, axis=(1, 2))
             else:
-                sum = np.avg(extrait, axis=(1, 2))
+                sum = np.average(extrait, axis=(1, 2))
             result[:, pos_h // stride[0],
                    pos_w // stride[1], :] = sum
 
