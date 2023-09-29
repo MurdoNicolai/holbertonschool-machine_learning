@@ -10,13 +10,13 @@ def inception_block(A_prev, filters):
                               activation='relu')(x)
 
     conv3x3r = K.layers.Conv2D(filters[1], (1, 1), padding='same',
-                              activation='relu')(x)
+                               activation='relu')(x)
 
     conv3x3 = K.layers.Conv2D(filters[2], (3, 3), padding='same',
                               activation='relu')(conv3x3r)
 
     conv5x5r = K.layers.Conv2D(filters[3], (1, 1), padding='same',
-                              activation='relu')(x)
+                               activation='relu')(x)
 
     conv5x5 = K.layers.Conv2D(filters[4], (5, 5), padding='same',
                               activation='relu')(conv5x5r)
@@ -29,5 +29,3 @@ def inception_block(A_prev, filters):
                                                       conv5x5, max_pool_conv])
 
     return inception_output
-
-
