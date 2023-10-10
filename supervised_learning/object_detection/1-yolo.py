@@ -21,6 +21,7 @@ class Yolo():
         self.nms_t = nms_t
         self.anchors = anchors
 
+
     def process_outputs(self, outputs, image_size):
         """
         Returns a tuple of (boxes, box_confidences, box_class_probs):
@@ -34,7 +35,9 @@ class Yolo():
         ih = image_size[0]
         iw = image_size[1]
         print(ih, iw)
-        for output in outputs[:1]:
+        for output in outputs:
+            output[..., :2] = 1.0 / (1.0 + np.exp(-output[..., :2]))
+            output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
             gh = output.shape[0]
             gw = output.shape[1]
             split_output = np.array_split(output, (4, 5, ), axis=3)
@@ -46,8 +49,8 @@ class Yolo():
             answer = [-2.13743365e+02, -4.85478868e+02,  3.05682061e+02, 5.31534670e+02]
             print(test)
             print(answer[2]- answer[0])
-            print((answer[2] - answer[0])/test[2]/gw)
-            print((answer[3] - answer[1])/test[3]/gh)
+            print((answer[2] - answer[0]))
+            print((answer[3] - answer[1]))
 
 
 
