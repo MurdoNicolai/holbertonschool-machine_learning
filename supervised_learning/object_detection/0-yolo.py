@@ -14,7 +14,7 @@ class Yolo():
         anchors: the anchor boxes
         """
         self.model = tf.keras.models.load_model(model_path)
-        with open (classes_path, "r") as myfile:
+        with open(classes_path, "r") as myfile:
             self.class_names = myfile.read().splitlines()
         self.class_t = class_t
         self.nms_t = nms_t
