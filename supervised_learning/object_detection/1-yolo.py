@@ -53,6 +53,6 @@ class Yolo():
 
 
 
-            # box_confidences.append(split_output[1])
-            # box_class_probs.append(split_output[2])
+            box_confidences.append(split_output[1])
+            box_class_probs.append(split_output[2])
         return ((boxes, box_confidences, box_class_probs))
