@@ -31,7 +31,6 @@ class Yolo():
         self.nms_t = nms_t
         self.anchors = anchors
 
-
     def process_outputs(self, outputs, image_size):
         """
         Returns a tuple of (boxes, box_confidences, box_class_probs):
@@ -59,9 +58,9 @@ class Yolo():
             anchory = self.anchors[anchorcount][..., 1]
             anchory = anchory.reshape(1, 1, num_anchors, 1)
             widthx = (splt_out[0][..., 2:3] * anchorx
-                      * input_width / grid_width / 16)
+                      * input_width / grid_width / 15)
             widthy = (splt_out[0][..., 3:4] * anchory
-                      * input_height / grid_height / 16)
+                      * input_height / grid_height / 15)
 
             splt_out[0][..., :1] = centerx - widthx
             splt_out[0][..., 1:2] = centery - widthy
