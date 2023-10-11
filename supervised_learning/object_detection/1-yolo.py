@@ -47,8 +47,8 @@ class Yolo():
         iw = image_size[1]
         print(ih, iw)
         for output in outputs:
-            output[..., :2] = sigmoid(-output[..., :2])
-            output[..., 4] = sigmoid(-output[..., 4])
+            output[..., :2] = 1.0 / (1.0 + np.exp(-output[..., :2]))
+            output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
             gh = output.shape[0]
             gw = output.shape[1]
             split_output = np.array_split(output, (4, 5, ), axis=3)
