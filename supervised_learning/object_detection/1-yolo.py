@@ -61,7 +61,7 @@ class Yolo():
             widthx = (splt_out[0][..., 2:3] * anchorx
                       * input_width / grid_width / 16)
             widthy = (splt_out[0][..., 3:4] * anchory
-                      * input_height / grid_height / 8)
+                      * input_height / grid_height / 16)
 
             splt_out[0][..., :1] = centerx - widthx
             splt_out[0][..., 1:2] = centery - widthy
