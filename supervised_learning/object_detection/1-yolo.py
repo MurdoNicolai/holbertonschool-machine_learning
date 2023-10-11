@@ -30,20 +30,6 @@ class Yolo():
         self.class_t = class_t
         self.nms_t = nms_t
         self.anchors = anchors
-        self.stride = self.get_convolutional_stride()
-
-        # ... the rest of your initialization code ...
-
-    def get_convolutional_stride(self):
-        # Inspect the model's layers to find a convolutional layer
-        for layer in self.model.layers:
-            if isinstance(layer, tf.keras.layers.Conv2D):
-                # This is a convolutional layer; you can extract the stride information
-                height_stride, width_stride = layer.strides
-                return height_stride, width_stride
-
-        # Handle the case where no convolutional layer is found
-        raise ValueError("No convolutional layer found in the model")
 
 
     def process_outputs(self, outputs, image_size):
@@ -53,8 +39,6 @@ class Yolo():
         box_confidences -> contains the box confidences for each output
         box_class_probs -> contains the box class probabilities for each output
         """
-        print(self.stride)
-        raise ValueError("stop")
         boxes = []
         box_confidences = []
         box_class_probs = []
@@ -75,9 +59,9 @@ class Yolo():
             anchory = self.anchors[anchorcount][..., 1]
             anchory = anchory.reshape(1, 1, num_anchors, 1)
             widthx = (splt_out[0][..., 2:3] * anchorx
-                      * input_width / grid_width / 6)
+                      * input_width / grid_width / 10)
             widthy = (splt_out[0][..., 3:4] * anchory
-                      * input_height / grid_height / 6)
+                      * input_height / grid_height / 10)
 
             splt_out[0][..., :1] = centerx - widthx
             splt_out[0][..., 1:2] = centery - widthy
