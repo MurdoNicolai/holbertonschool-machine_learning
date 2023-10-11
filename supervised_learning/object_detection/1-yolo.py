@@ -58,9 +58,9 @@ class Yolo():
             anchory = self.anchors[anchorcount][..., 1]
             anchory = anchory.reshape(1, 1, num_anchors, 1)
             widthx = (splt_out[0][..., 2:3] * anchorx
-                      * input_width / grid_width / 15)
+                      * input_width / grid_width / 15.5)
             widthy = (splt_out[0][..., 3:4] * anchory
-                      * input_height / grid_height / 15)
+                      * input_height / grid_height / 15.5)
 
             splt_out[0][..., :1] = centerx - widthx
             splt_out[0][..., 1:2] = centery - widthy
