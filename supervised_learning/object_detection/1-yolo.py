@@ -44,7 +44,7 @@ class Yolo():
         input_height = image_size[0]
         input_width = image_size[1]
         anchorcount = 0
-        for output in outputs[0:1]:
+        for output in outputs:
             output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
             splt_out = np.array_split(output, (4, 5, ), axis=3)
             grid_height, grid_width, num_anchors, _ = output.shape
