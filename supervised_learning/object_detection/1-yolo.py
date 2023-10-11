@@ -14,61 +14,48 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
-class Yolo():
-    """uses the Yolo v3 algorithm to perform object detection"""
-    def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
-        """
-        model: the Darknet Keras model
-        class_names: a list of the class names for the model
-        class_t: the box score threshold for the initial filtering step
-        nms_t: the IOU threshold for non-max suppression
-        anchors: the anchor boxes
-        """
-        self.model = tf.keras.models.load_model(model_path)
-        with open(classes_path, "r") as myfile:
-            self.class_names = myfile.read().splitlines()
-        self.class_t = class_t
-        self.nms_t = nms_t
-        self.anchors = anchors
+def process_outputs(self, outputs, image_size):
+    boxes = []
+    box_confidences = []
+    box_class_probs = []
 
-    def process_outputs(self, outputs, image_size):
-        """
-        Returns a tuple of (boxes, box_confidences, box_class_probs):
-        boxes -> contains the processed boundary boxes
-        box_confidences -> contains the box confidences for each output
-        box_class_probs -> contains the box class probabilities for each output
-        """
-        boxes = []
-        box_confidences = []
-        box_class_probs = []
-        input_height = image_size[0]
-        input_width = image_size[1]
-        anchorcount = 0
-        for output in outputs:
-            output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
-            splt_out = np.array_split(output, (4, 5, ), axis=3)
-            grid_height, grid_width, num_anchors, _ = output.shape
+    input_height, input_width = image_size
+    anchorcount = 0
 
-            splt_out[0][..., :2] = 1.0 / (1.0 + np.exp(-splt_out[0][..., :2]))
-            splt_out[0][..., 2:4] = np.exp(splt_out[0][..., 2:4])
-            centerx = splt_out[0][..., :1] * input_width / grid_width
-            centery = splt_out[0][..., 1:2] * input_height / grid_height
-            anchorx = self.anchors[anchorcount][..., 0]
-            anchorx = anchorx.reshape(1, 1, num_anchors, 1)
-            anchory = self.anchors[anchorcount][..., 1]
-            anchory = anchory.reshape(1, 1, num_anchors, 1)
-            widthx = (splt_out[0][..., 2:3] * anchorx
-                      * input_width / grid_width / 64)
-            widthy = (splt_out[0][..., 3:4] * anchory
-                      * input_height / grid_height / 64)
+    for output in outputs:
+        grid_height, grid_width, num_anchors, _ = output.shape
 
-            splt_out[0][..., :1] = centerx - widthx
-            splt_out[0][..., 1:2] = centery - widthy
-            splt_out[0][..., 2:3] = centerx + widthx
-            splt_out[0][..., 3:4] = centery + widthy
+        # Applying sigmoid activation to the confidence score
+        output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
 
-            boxes.append(splt_out[0])
-            box_confidences.append(splt_out[1])
-            box_class_probs.append(sigmoid(splt_out[2]))
-            anchorcount += 1
-        return ((boxes, box_confidences, box_class_probs))
+        # Split the output into parts
+        center_x, center_y, width, height, box_confidence, class_probs = np.split(output, (1, 2, 3, 4, 5), axis=-1)
+
+        # Applying sigmoid activation to center_x and center_y
+        center_x = 1.0 / (1.0 + np.exp(-center_x))
+        center_y = 1.0 / (1.0 + np.exp(-center_y))
+
+        # Exponentiate to get width and height
+        width = np.exp(width)
+        height = np.exp(height)
+
+        # Adjust coordinates to the image size
+        center_x = (center_x + np.arange(grid_width)) / grid_width * input_width
+        center_y = (center_y + np.arange(grid_height)) / grid_height * input_height
+        width = width * self.anchors[anchorcount, 0]
+        height = height * self.anchors[anchorcount, 1]
+
+        # Calculate bounding box coordinates
+        x1 = center_x - width / 2.0
+        y1 = center_y - height / 2.0
+        x2 = center_x + width / 2.0
+        y2 = center_y + height / 2.0
+
+        # Append the results for this anchor box to the respective lists
+        boxes.append(np.concatenate((x1, y1, x2, y2), axis=-1))
+        box_confidences.append(box_confidence)
+        box_class_probs.append(softmax(class_probs))
+
+        anchorcount += 1
+
+    return boxes, box_confidences, box_class_probs
