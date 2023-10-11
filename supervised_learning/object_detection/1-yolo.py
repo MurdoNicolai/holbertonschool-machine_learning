@@ -4,6 +4,17 @@ import tensorflow as tf
 import numpy as np
 
 
+def softmax(x):
+    """returns the softmax of x"""
+    return np.exp(x) / np.sum(np.exp(x), axis=3, keepdims=True)
+
+
+def sigmoid(x):
+    """returns the sigmoid of x"""
+    return 1 / (1 + np.exp(-x))
+
+
+
 class Yolo():
     """uses the Yolo v3 algorithm to perform object detection"""
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
@@ -36,8 +47,8 @@ class Yolo():
         iw = image_size[1]
         print(ih, iw)
         for output in outputs:
-            output[..., :2] = 1.0 / (1.0 + np.exp(-output[..., :2]))
-            output[..., 4] = 1.0 / (1.0 + np.exp(-output[..., 4]))
+            output[..., :2] = sigmoid(-output[..., :2])
+            output[..., 4] = sigmoid(-output[..., 4])
             gh = output.shape[0]
             gw = output.shape[1]
             split_output = np.array_split(output, (4, 5, ), axis=3)
@@ -57,5 +68,5 @@ class Yolo():
 
 
             box_confidences.append(split_output[1])
-            box_class_probs.append(split_output[2])
+            box_class_probs.append(sigmoid(split_output[2]))
         return ((boxes, box_confidences, box_class_probs))
