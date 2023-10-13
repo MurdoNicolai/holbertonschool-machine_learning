@@ -22,19 +22,22 @@ def identity_block(A_prev, filters):
     x = A_prev
     # First 1x1 convolution layer
     x = K.layers.Conv2D(F11, (1, 1), strides=(1, 1), padding='valid',
-                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
+                        kernel_initializer=K.initializers.
+                        he_normal(seed=None))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
     x = K.layers.Activation('relu')(x)
 
     # 3x3 convolution layer
     x = K.layers.Conv2D(F3, (3, 3), strides=(1, 1), padding='same',
-                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
+                        kernel_initializer=K.initializers.
+                        he_normal(seed=None))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
     x = K.layers.Activation('relu')(x)
 
     # Second 1x1 convolution layer
     x = K.layers.Conv2D(F12, (1, 1), strides=(1, 1), padding='valid',
-                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
+                        kernel_initializer=K.initializers.
+                        he_normal(seed=None))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
 
     # Add the shortcut (input) to the output
