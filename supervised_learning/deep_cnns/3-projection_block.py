@@ -5,16 +5,16 @@ import tensorflow.keras as K
 
 def projection_block(A_prev, filters, s=2):
     """
-    Implement the projection block as defined in Deep Residual Learning for Image Recognition (2015).
+    Implement the projection block as defined in Deep Residual Learning
+    for Image Recognition (2015).
 
     Args:
     A_prev (K.layers.Layer): Output from the previous layer.
     filters (tuple or list): A tuple containing F11, F3, and F12, respectively:
         F11: Number of filters in the first 1x1 convolution.
         F3: Number of filters in the 3x3 convolution.
-        F12: Number of filters in the second 1x1 convolution, also in the shortcut connection.
-    s (int): Stride for the first convolution in both the main path and the shortcut connection.
-
+        F12: Number of filters in the second 1x1 convolution,
+    s (int): Stride for the first convolution in both the main
     Returns:
     K.layers.Layer: The activated output of the projection block.
     """
@@ -45,4 +45,3 @@ def projection_block(A_prev, filters, s=2):
     x = K.layers.Activation('relu')(x)
 
     return x
-
