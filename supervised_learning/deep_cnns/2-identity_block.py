@@ -5,7 +5,8 @@ import tensorflow.keras as K
 
 def identity_block(A_prev, filters):
     """
-    Implement the identity block as defined in Deep Residual Learning for Image Recognition (2015).
+    Implement the identity block as defined in Deep Residual
+    Learning for Image Recognition (2015).
 
     Args:
     A_prev (tf.Tensor): Output from the previous layer.
@@ -18,19 +19,22 @@ def identity_block(A_prev, filters):
     tf.Tensor: The activated output of the identity block.
     """
     F11, F3, F12 = filters
-
+    x = A_prev
     # First 1x1 convolution layer
-    x = K.layers.Conv2D(F11, (1, 1), strides=(1, 1), padding='valid', kernel_initializer=K.initializers.he_normal(seed=0))(A_prev)
+    x = K.layers.Conv2D(F11, (1, 1), strides=(1, 1), padding='valid',
+                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
     x = K.layers.Activation('relu')(x)
 
     # 3x3 convolution layer
-    x = K.layers.Conv2D(F3, (3, 3), strides=(1, 1), padding='same', kernel_initializer=K.initializers.he_normal(seed=0))(x)
+    x = K.layers.Conv2D(F3, (3, 3), strides=(1, 1), padding='same',
+                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
     x = K.layers.Activation('relu')(x)
 
     # Second 1x1 convolution layer
-    x = K.layers.Conv2D(F12, (1, 1), strides=(1, 1), padding='valid', kernel_initializer=K.initializers.he_normal(seed=0))(x)
+    x = K.layers.Conv2D(F12, (1, 1), strides=(1, 1), padding='valid',
+                        kernel_initializer=K.initializers.he_normal(seed=0))(x)
     x = K.layers.BatchNormalization(axis=3)(x)
 
     # Add the shortcut (input) to the output
