@@ -20,7 +20,6 @@ def projection_block(A_prev, filters, s=2):
     """
     F11, F3, F12 = filters
 
-
     # Main path
     x = K.layers.Conv2D(F11, (1, 1), strides=(s, s), padding='valid',
                         kernel_initializer='he_normal')(A_prev)
