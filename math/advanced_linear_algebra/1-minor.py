@@ -35,17 +35,17 @@ def determinant(matrix):
 
 def minor(matrix):
     """ calculates the minor of a matrix """
-    if matrix == [[]]:
-        return [[1]]
     if (type(matrix) != list):
         raise TypeError('matrix must be a list of lists')
     else:
         for row in matrix:
             if type(row) != list:
                 raise TypeError('matrix must be a list of lists')
+    if matrix == [[]]:
+        raise ValueError('matrix must be a non-empty square matrix')
     for row in matrix:
         if len(row) != len(matrix):
-            raise ValueError('matrix must be a square matrix')
+            raise ValueError('matrix must be a non-empty square matrix')
 
     if len(matrix) == 1:
         return [[1]]
