@@ -36,19 +36,19 @@ def determinant(matrix):
 def minor(matrix):
     """ calculates the minor of a matrix """
     if matrix == [[]]:
-        return 1
+        return [[1]]
     if (type(matrix) != list):
         raise TypeError('matrix must be a list of lists')
     else:
         for row in matrix:
             if type(row) != list:
                 raise TypeError('matrix must be a list of lists')
-
-    if len(matrix[0]) != len(matrix):
-        raise ValueError('matrix must be a square matrix')
+    for row in matrix:
+        if len(row) != len(matrix):
+            raise ValueError('matrix must be a square matrix')
 
     if len(matrix) == 1:
-        return 1
+        return [[1]]
 
     new_matrix = [0] * len(matrix)
     for row in range(len(new_matrix)):
