@@ -6,10 +6,14 @@ def determinant(matrix):
     """ calculates the determinant of a matrix """
     if matrix == [[]]:
         return 0
-    if (type(matrix) != list or
-        type(matrix[0]) != list or
-        type(matrix[0][0]) != int):
+    if (type(matrix) != list):
         raise TypeError('matrix must be a list of lists')
+    else:
+        for row in matrix:
+            if type(row) != list:
+                raise TypeError('matrix must be a list of lists')
+
+
     if len(matrix[0]) != len(matrix):
         raise ValueError('matrix must be a square matrix')
 
