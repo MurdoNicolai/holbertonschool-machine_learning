@@ -110,6 +110,6 @@ def adjugate(matrix):
     for row in range(len(new_matrix)):
         new_matrix[row] = [0] * len(matrix[0])
     for i in range(len(new_matrix)):
-        for j in range(len(i)):
+        for j in range(len(new_matrix[i])):
             new_matrix[i][j] = matrix[j][i]
     return new_matrix
