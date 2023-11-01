@@ -118,11 +118,11 @@ def adjugate(matrix):
 def inverse(matrix):
     """calculates the inverse of matrix"""
     matrix = adjugate(matrix)
-    determinant = determinant(matrix)
+    det = determinant(matrix)
     new_matrix = [0] * len(matrix)
     for row in range(len(new_matrix)):
         new_matrix[row] = [0] * len(matrix[0])
     for i in range(len(new_matrix)):
         for j in range(len(new_matrix[i])):
-            new_matrix[i][j] = matrix[i][j]/determinant
+            new_matrix[i][j] = matrix[i][j]/det
     return new_matrix
