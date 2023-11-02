@@ -9,5 +9,8 @@ def mean_cov(X):
         raise TypeError("X must be a 2D numpy.ndarray")
     if X.shape[0] < 2:
         raise ValueError("X must contain multiple data points")
-    return np.mean(X, axis=0), np.cov(X.T)
+    mean = np.mean(X, axis=0, keepdims=True)
+    centered_data = X - mean
+    cov = np.dot(centered_data.T, centered_data) / (X.shape[0] - 1)
+    return mean, cov
 
