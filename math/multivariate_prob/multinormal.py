@@ -22,6 +22,6 @@ class MultiNormal:
         """
         if type(data) is not np.ndarray or data.ndim != 2:
             raise TypeError("data must be a 2D numpy.ndarray")
-        if data.shape[0] < 2:
+        if data.shape[1] < 2:
             raise ValueError("data must contain multiple data points")
         self.mean, self.cov = mean_cov(data.T)
