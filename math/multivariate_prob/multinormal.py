@@ -33,14 +33,14 @@ class MultiNormal:
             raise TypeError("x must be a numpy.ndarray")
 
         if len(x.shape) != 2 or x.shape != (self.data.shape[0], 1):
-            raise ValueError("x must have the shape ({d}, 1)")
+            raise ValueError("x must have the shape (3, 1)")
 
         mean, covariance = self.mean, self.cov
         det_covariance = np.linalg.det(covariance)
-
+        # calculate PDF of a point
         exponent = -0.5 * (x - mean).T @ np.linalg.inv(covariance) @ (x - mean)
-        subscript =1 / (np.sqrt((2 * np.pi) ** x.shape[0] * det_covariance))
-        pdf = subscript * np.exp(exponent)
+        # note: @ is the same as np.matmul()
+        subscript = 1 / (np.sqrt((2 * np.pi) ** x.shape[0] * det_covariance))
+        pdf = subscript * np.exp(exponent[0][0])
 
         return pdf
-
