@@ -3,6 +3,12 @@
 import numpy as np
 
 
+def binomial_coefficient(n, k):
+    """Calculate n! / (k! * (n - k)!)"""
+    return (np.math.factorial(n) // (np.math.factorial(k) *
+                                     np.math.factorial(n - k)))
+
+
 def likelihood(x, n, P):
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
@@ -20,7 +26,7 @@ def likelihood(x, n, P):
         raise ValueError("All values in P must be in the range [0, 1]")
 
     # Calculate the binomial probability mass function
-    likelihoods = np.array([np.math.comb(n, x) * (p ** x) *
+    likelihoods = np.array([binomial_coefficient(n, x) * (p ** x) *
                             ((1 - p) ** (n - x)) for p in P])
 
     return likelihoods
