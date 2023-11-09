@@ -10,6 +10,7 @@ def binomial_coefficient(n, k):
 
 
 def likelihood(x, n, P):
+    """return likelihood of x positive in n event for each P probability"""
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
 
