@@ -67,3 +67,14 @@ def intersection(x, n, P, Pr):
                                     for p, pr in zip(P, Pr)])
 
     return intersection_values
+
+def marginal(x, n, P, Pr):
+    """calculates the marginal probability"""
+    return (np.sum([intersection(x, n, P, Pr_i) for Pr_i in Pr]))
+
+def posterior(x, n, P, Pr):
+    """calculates the posterior probability"""
+
+    marginal_prob = marginal(x, n, P, Pr)
+    return (np.array([intersection(x, n, P, Pr_i)
+                      / marginal_prob for Pr_i in Pr]))
