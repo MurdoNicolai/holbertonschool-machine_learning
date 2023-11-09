@@ -50,8 +50,10 @@ def intersection(x, n, P, Pr):
 
     if not all(0 <= p <= 1 for p in P):
         raise ValueError("All values in P must be in the range [0, 1]")
-    if not all(0 <= pr <= 1 for pr in Pr):
-        raise ValueError("All values in Pr must be in the range [0, 1]")
+
+    for pr in Pr:
+        if (0 <= pr <= 1):
+            raise ValueError("All values in Pr must be in the range [0, 1]")
 
     if not np.isclose(np.sum(Pr), 1.0):
         raise ValueError("Pr must sum to 1")
