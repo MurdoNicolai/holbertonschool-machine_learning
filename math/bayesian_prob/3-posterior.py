@@ -79,4 +79,4 @@ def posterior(x, n, P, Pr):
 
     marginal_prob = marginal(x, n, P, Pr)
     return (np.array([intersection(x, n, P, Pr)
-                      / marginal_prob])[0] )
+                      / marginal_prob])[0])
