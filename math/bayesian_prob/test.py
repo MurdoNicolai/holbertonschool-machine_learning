@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 
-if __name__ == '__main__':
-    import numpy as np
-    intersection = __import__('1-intersection').intersection
+intersection = __import__('1-intersection').intersection
+import numpy as np
 
-    P = np.linspace(0, 1, 11)
-    Pr = np.ones(11) / 11 # this prior assumes that everything is equally as likely
-    print(intersection(26, 130, P, Pr))
+try:
+    intersection(20, 25, np.linspace(0, 1, 5), [0.2, 0.2, 0.2, 0.2, 0.2])
+except TypeError as e:
+    print(str(e))
+try:
+    intersection(20, 25, np.linspace(0, 1, 5), np.array([0.5, 0.5]))
+except TypeError as e:
+    print(str(e))
+try:
+    intersection(20, 25, np.linspace(0, 1, 5), np.array([[0.2, 0.2, 0.2, 0.2, 0.2]]))
+except TypeError as e:
+    print(str(e))

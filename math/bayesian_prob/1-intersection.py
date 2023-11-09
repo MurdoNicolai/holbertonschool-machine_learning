@@ -52,6 +52,8 @@ def intersection(x, n, P, Pr):
         raise ValueError("All values in P must be in the range [0, 1]")
 
     for pr in Pr:
+        if not isinstance(P, int):
+            raise ValueError("All values in Pr must be in the range [0, 1]")
         if not (0 <= pr <= 1):
             raise ValueError("All values in Pr must be in the range [0, 1]")
 
