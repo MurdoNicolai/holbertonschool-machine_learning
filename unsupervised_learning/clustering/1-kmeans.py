@@ -29,7 +29,7 @@ def kmeans(X, k, iterations=1000):
 
     min_vals = np.min(X, axis=0)
     max_vals = np.max(X, axis=0)
-    C = np.random.uniform(low=min_vals, high=max_vals, size=(k, d))
+    C = initialize(X, k)
 
     for _ in range(iterations):
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
