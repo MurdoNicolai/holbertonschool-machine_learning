@@ -45,4 +45,7 @@ def kmeans(X, k, iterations=1000):
             return C, clss
 
         C = new_C
+
+    distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
+    clss = np.argmin(distances, axis=1)
     return C, clss
