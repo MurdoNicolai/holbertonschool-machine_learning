@@ -45,4 +45,4 @@ def kmeans(X, k, iterations=1000):
             return C, clss
 
         C = new_C
-    return None, None
+    return C, clss
