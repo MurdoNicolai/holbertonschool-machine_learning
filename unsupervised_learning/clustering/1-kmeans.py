@@ -32,16 +32,16 @@ def kmeans(X, k, iterations=1000):
     C = initialize(X, k)
 
     if not isinstance(X, np.ndarray):
-        return None
+        return (None, None)
 
     if X.ndim != 2:
-        return None
+        return (None, None)
 
     if not isinstance(k, int) or k <= 0:
-        return None
+        return (None, None)
 
     if not isinstance(iterations, int) or iterations <= 0:
-        return None
+        return (None, None)
 
     for _ in range(iterations):
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
