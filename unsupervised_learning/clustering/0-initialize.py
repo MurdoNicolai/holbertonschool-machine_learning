@@ -16,6 +16,8 @@ def initialize(X, k):
     if X.ndim != 2:
         return None
 
-    if not isinstance(k, int):
+    if not isinstance(k, int) or k <= 0:
         return None
-    return np.random.uniform(np.min(X, axis = 0), np.max(X, axis = 0), (k, X.shape[1]))
+
+    return np.random.uniform(np.min(X, axis=0), np.max(X, axis=0),
+                             (k, X.shape[1]))
