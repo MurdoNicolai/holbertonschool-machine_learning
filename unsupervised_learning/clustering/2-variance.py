@@ -18,6 +18,9 @@ def variance(X, C):
     if C.ndim != 2:
         return None
 
+    if X.shape[1] != C.shape[1]:
+        return None
+
     distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
     clss = np.argmin(distances, axis=1)
     var = np.sum((X - C[clss]) ** 2)
