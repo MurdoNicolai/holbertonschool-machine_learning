@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-if __name__ == '__main__':
-    import numpy as np
-    posterior = __import__('3-posterior').posterior
+import numpy as np
+initialize = __import__('0-initialize').initialize
 
-    P = np.linspace(0, 1, 11)
-    Pr = np.ones(11) / 11
-    print(posterior(26, 130, P, Pr))
+if __name__ == "__main__":
+    X = np.random.rand(100, 3)
+    print(initialize(X, '2'))
+    print(initialize(X, 0))
+    print(initialize(X, -5))
