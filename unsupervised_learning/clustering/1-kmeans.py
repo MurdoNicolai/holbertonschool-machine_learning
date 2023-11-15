@@ -25,11 +25,6 @@ def initialize(X, k):
 
 def kmeans(X, k, iterations=1000):
     """performs K-means on a dataset"""
-    n, d = X.shape
-
-    min_vals = np.min(X, axis=0)
-    max_vals = np.max(X, axis=0)
-    C = initialize(X, k)
 
     if not isinstance(X, np.ndarray):
         return (None, None)
@@ -42,6 +37,11 @@ def kmeans(X, k, iterations=1000):
 
     if not isinstance(iterations, int) or iterations <= 0:
         return (None, None)
+    n, d = X.shape
+
+    min_vals = np.min(X, axis=0)
+    max_vals = np.max(X, axis=0)
+    C = initialize(X, k)
 
     for _ in range(iterations):
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
