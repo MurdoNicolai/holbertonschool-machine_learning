@@ -31,6 +31,18 @@ def kmeans(X, k, iterations=1000):
     max_vals = np.max(X, axis=0)
     C = initialize(X, k)
 
+    if not isinstance(X, np.ndarray):
+        return None
+
+    if X.ndim != 2:
+        return None
+
+    if not isinstance(k, int) or k <= 0:
+        return None
+
+    if not isinstance(iterations, int) or iterations <= 0:
+        return None
+
     for _ in range(iterations):
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
         clss = np.argmin(distances, axis=1)
