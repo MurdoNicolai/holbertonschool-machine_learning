@@ -14,6 +14,6 @@ def initialize(X, k):
     if m is None:
         return None, None, None
 
-    S = np.array([np.identity(d) for _ in range(k)])
+    S = np.array([np.identity(d)] * k)
 
     return pi, m, S
