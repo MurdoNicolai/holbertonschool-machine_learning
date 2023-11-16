@@ -29,22 +29,22 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     """tests for the optimum number of clusters by variance:"""
 
     if not isinstance(X, np.ndarray):
-        return((None, None), (None, None))
+        return((None, None))
 
     if X.ndim != 2:
-        return((None, None), (None, None))
+        return((None, None))
 
     if (not isinstance(kmax, int) or kmax <= 0) and kmax is not None:
-        return((None, None), (None, None))
+        return((None, None))
 
     if not isinstance(kmin, int) or kmin <= 0:
-        return((None, None), (None, None))
+        return((None, None))
 
     if not isinstance(iterations, int) or iterations <= 0:
-        return((None, None), (None, None))
+        return((None, None))
 
     if kmax is not None and kmax <= kmin:
-        return((None, None), (None, None))
+        return((None, None))
 
     C, clss = kmeans(X, kmin, iterations)
     results = [(C, clss)]
