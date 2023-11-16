@@ -28,7 +28,7 @@ def initialize(X, k):
 def optimum_k(X, kmin=1, kmax=30, iterations=1000):
     """tests for the optimum number of clusters by variance:"""
     C, clss = kmeans(X, kmin, iterations)
-    results = [C]
+    results = [C, clss]
     first_variance = variance(X, C)
     d_vars = [0]
     for k in range(kmin + 1, kmax + 1):
