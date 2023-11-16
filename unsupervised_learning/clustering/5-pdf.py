@@ -15,6 +15,12 @@ def pdf(X, m, S):
     if not isinstance(S, np.ndarray):
         return None
 
+    if not S.ndim == X.ndim == 2 and m.ndim == 1:
+        return None
+
+    if not (S.shape[0] == S.shape[1] == m.shape[0] == X.shape[1]):
+        return None
+
     d = m.shape[0]
 
     det_S = np.linalg.det(S)
@@ -24,7 +30,9 @@ def pdf(X, m, S):
         return None
 
     inv_S = np.linalg.inv(S)
+
     centered_X = X - m
+
     exponent = -0.5 * np.sum(centered_X @ inv_S * centered_X, axis=1)
 
     norm_term = 1 / ((2 * np.pi) ** (d / 2) * det_S ** 0.5)
