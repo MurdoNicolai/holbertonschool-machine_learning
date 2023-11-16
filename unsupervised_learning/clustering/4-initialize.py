@@ -6,6 +6,16 @@ kmeans = __import__('1-kmeans').kmeans
 
 def initialize(X, k):
     """ initializes variables for a Gaussian Mixture Model:"""
+
+    if not isinstance(X, np.ndarray):
+        return None
+
+    if X.ndim != 2:
+        return None
+
+    if not isinstance(k, int) or k <= 0:
+        return None
+
     n, d = X.shape
 
     pi = np.full(k, 1/k)
