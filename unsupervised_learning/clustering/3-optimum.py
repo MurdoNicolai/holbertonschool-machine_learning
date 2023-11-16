@@ -24,13 +24,15 @@ def initialize(X, k):
     return np.random.uniform(np.min(X, axis=0), np.max(X, axis=0),
                              (k, X.shape[1]))
 
+
 def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     """tests for the optimum number of clusters by variance:"""
     C, clss = kmeans(X, kmin, iterations)
     results = [C]
     first_variance = variance(X, C)
     d_vars = [0]
-
+    if kmax is None:
+        kmax = kmin + 2
     for k in range(kmin + 1, kmax + 1):
         C, clss = kmeans(X, k, iterations)
         results.append(C)
