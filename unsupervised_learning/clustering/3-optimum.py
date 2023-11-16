@@ -34,7 +34,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     if X.ndim != 2:
         return((None, None), (None, None))
 
-    if not isinstance(kmax, int) or kmax <= 0:
+    if (not isinstance(kmax, int) or kmax <= 0) and kmax is not None:
         return((None, None), (None, None))
 
     if not isinstance(kmin, int) or kmin <= 0:
@@ -43,8 +43,9 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     if not isinstance(iterations, int) or iterations <= 0:
         return((None, None), (None, None))
 
-    if kmax <= kmin:
+    if kmax is not None and kmax <= kmin:
         return((None, None), (None, None))
+
     C, clss = kmeans(X, kmin, iterations)
     results = [(C, clss)]
     first_variance = variance(X, C)
