@@ -25,7 +25,7 @@ def initialize(X, k):
                              (k, X.shape[1]))
 
 
-def optimum_k(X, kmin=1, kmax=100, iterations=1000):
+def optimum_k(X, kmin=1, kmax=30, iterations=1000):
     """tests for the optimum number of clusters by variance:"""
     C, clss = kmeans(X, kmin, iterations)
     results = [C]
@@ -41,12 +41,11 @@ def optimum_k(X, kmin=1, kmax=100, iterations=1000):
             for ktest in range(k + 1, k + 10):
                 Ctest, clss = kmeans(X, k, iterations)
                 variance_difftest = first_variance - variance(X, Ctest)
-                if variance_difftest > max_variance:
+                if variance_difftest >= max_variance:
                     stop = 0
                     break
             if stop == 1:
                 break
-        else:
-            max_variance = variance_diff
-            d_vars.append(variance_diff)
+        max_variance = variance_diff
+        d_vars.append(variance_diff)
     return results, d_vars
