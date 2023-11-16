@@ -30,23 +30,11 @@ def optimum_k(X, kmin=1, kmax=30, iterations=1000):
     C, clss = kmeans(X, kmin, iterations)
     results = [C]
     first_variance = variance(X, C)
-    max_variance = 0
     d_vars = [0]
     for k in range(kmin + 1, kmax + 1):
         C, clss = kmeans(X, k, iterations)
         results.append(C)
         results.append(clss)
         variance_diff = first_variance - variance(X, C)
-        if variance_diff < max_variance:
-            stop = 1
-            for ktest in range(k + 1, k + 10):
-                Ctest, clss = kmeans(X, k, iterations)
-                variance_difftest = first_variance - variance(X, Ctest)
-                if variance_difftest >= max_variance:
-                    stop = 0
-                    break
-            if stop == 1:
-                break
-        max_variance = variance_diff
         d_vars.append(variance_diff)
     return results, d_vars
