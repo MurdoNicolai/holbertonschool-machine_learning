@@ -5,6 +5,16 @@ import numpy as np
 
 def pdf(X, m, S):
     """calculates the pdf"""
+
+    if not isinstance(X, np.ndarray):
+        return None
+
+    if not isinstance(m, np.ndarray):
+        return None
+
+    if not isinstance(S, np.ndarray):
+        return None
+
     d = m.shape[0]
 
     det_S = np.linalg.det(S)
@@ -14,9 +24,7 @@ def pdf(X, m, S):
         return None
 
     inv_S = np.linalg.inv(S)
-
     centered_X = X - m
-
     exponent = -0.5 * np.sum(centered_X @ inv_S * centered_X, axis=1)
 
     norm_term = 1 / ((2 * np.pi) ** (d / 2) * det_S ** 0.5)
