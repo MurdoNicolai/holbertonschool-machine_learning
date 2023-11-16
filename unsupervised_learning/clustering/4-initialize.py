@@ -10,7 +10,7 @@ def initialize(X, k):
 
     pi = np.full(k, 1/k)
 
-    m = kmeans(X, k)
+    m, _ = kmeans(X, k)
     if m is None:
         return None, None, None
 
