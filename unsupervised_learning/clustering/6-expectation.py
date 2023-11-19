@@ -7,16 +7,20 @@ pdf = __import__('5-pdf').pdf
 def expectation(X, pi, m, S):
     """calculates the expectation step in the EM algorithm for a GMM"""
 
-    if (not isinstance(X, np.ndarray) or not isinstance(pi, np.ndarray) or
-        not isinstance(m, np.ndarray) or not isinstance(S, np.ndarray)):
+    if ((not isinstance(X, np.ndarray) or not isinstance(pi, np.ndarray) or
+         not isinstance(m, np.ndarray) or not isinstance(S, np.ndarray))):
         return None, None
 
-    if (not X.ndim == 2 or not pi.ndim == 1 or
-        not m.ndim == 2 or not S.ndim == 3):
+    if ((not X.ndim == 2 or not pi.ndim == 1 or
+         not m.ndim == 2 or not S.ndim == 3)):
         return None, None
 
     if (not (pi.shape[0] == m.shape[0] == S.shape[0] and
              m.shape[1] == X.shape[1] == S.shape[1] == S.shape[2])):
+        return None, None
+
+    if not np.isclose(np.sum(pi), 1.0):
+        print("Error: The sum of pi values is not close to 1.0.")
         return None, None
 
     k, _ = m.shape
