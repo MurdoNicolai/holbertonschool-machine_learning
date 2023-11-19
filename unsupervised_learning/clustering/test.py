@@ -3,10 +3,9 @@
 import numpy as np
 pdf = __import__('5-pdf').pdf
 
-if __name__ == '__main__':
-    np.random.seed(0)
-    m = np.array([12, 30, 10])
-    S = np.array([[36, -30, 15], [-30, 100, -20], [15, -20, 25]])
-    X = np.random.multivariate_normal(m, S, 10000)
-    P = pdf(X, m, S)
-    print(P)
+if __name__ == "__main__":
+    m = np.random.randn(6)
+    S = np.random.randn(6, 6)
+    print(pdf('hello', m, S))
+    print(pdf(np.array([1, 2, 3, 4, 5]), m, S))
+    print(pdf(np.array([[[1, 2, 3, 4, 5]]]), m, S))
