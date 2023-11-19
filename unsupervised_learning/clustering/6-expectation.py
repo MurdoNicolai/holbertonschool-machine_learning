@@ -20,7 +20,6 @@ def expectation(X, pi, m, S):
         return None, None
 
     if not np.isclose(np.sum(pi), 1.0):
-        print("Error: The sum of pi values is not close to 1.0.")
         return None, None
 
     k, _ = m.shape
