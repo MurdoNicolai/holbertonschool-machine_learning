@@ -41,4 +41,3 @@ def markov_chain(P, s, t=1):
         s = s @ P
 
     return(s)
-
