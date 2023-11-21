@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
-regular = __import__('1-regular').regular
+absorbing = __import__('2-absorbing').absorbing
 
 if __name__ == '__main__':
     a = np.eye(2)
@@ -11,18 +11,23 @@ if __name__ == '__main__':
                   [0.2, 0.3, 0.2, 0.3],
                   [0.25, 0.25, 0.4, 0.1],
                   [0.3, 0.3, 0.1, 0.3]])
-    d = np.array([[0.8, 0.2, 0, 0, 0],
-                [0.25, 0.75, 0, 0, 0],
-                [0, 0, 0.5, 0.2, 0.3],
-                [0, 0, 0.3, 0.5, .2],
-                [0, 0, 0.2, 0.3, 0.5]])
-    e = np.array([[1, 0.25, 0, 0, 0],
-                [0.25, 0.75, 0, 0, 0],
-                [0, 0.1, 0.5, 0.2, 0.2],
-                [0, 0.1, 0.2, 0.5, .2],
-                [0, 0.1, 0.2, 0.2, 0.5]])
-    print(regular(a))
-    print(regular(b))
-    print(regular(c))
-    print(regular(d))
-    print(regular(e))
+    d = np.array([[1, 0, 0, 0, 0],
+                  [0.25, 0.75, 0, 0, 0],
+                  [0, 0, 0.5, 0.2, 0.3],
+                  [0, 0, 0.3, 0.5, .2],
+                  [0, 0, 0.2, 0.3, 0.5]])
+    e = np.array([[1, 0, 0, 0, 0],
+                  [0.25, 0.75, 0, 0, 0],
+                  [0, 0.1, 0.5, 0.2, 0.2],
+                  [0, 0.1, 0.2, 0.5, .2],
+                  [0, 0.1, 0.2, 0.2, 0.5]])
+    f = np.array([[1, 0, 0, 0],
+                  [0, 1, 0, 0],
+                  [0, 0, 0.5, 0.5],
+                  [0, 0.5, 0.5, 0]])
+    print(absorbing(a))
+    print(absorbing(b))
+    print(absorbing(c))
+    print(absorbing(d))
+    print(absorbing(e))
+    print(absorbing(f))
