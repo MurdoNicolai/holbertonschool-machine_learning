@@ -23,4 +23,4 @@ def forward(Observation, Emission, Transition, Initial):
         Initial = Initial * Emission.T[Observation[nb_observations]]
         F = np.vstack((F, Initial))
         Initial = Initial @ Transition
-    return(np.sum(F[nb_observations + 1]), F)
+    return(np.sum(F[nb_observations + 1]), F[1:].T)
