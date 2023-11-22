@@ -32,4 +32,4 @@ def viterbi(Observation, Emission, Transition, Initial):
     for t in range(Observation.shape[0]-1, 0, -1):
         best_last_state = L_Paths[best_last_state, t]
         best_path.insert(0, best_last_state)
-    return np.array(best_path), np.max(L_PathChances)
+    return best_path, np.max(L_PathChances)
