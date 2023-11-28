@@ -57,35 +57,57 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     return Transition, Emission
 
 
-def forward(obs, trans, emit, init):
+def forward(Observation, Emission, Transition, Initial):
+    """performs the forward algorithm for a hidden markov model:
+    Observation -> numpy.ndarray of shape (T,) that
+        contains the index of the observation
+
+    Emission -> numpy.ndarray of shape (N, M) containing the emission
+        probability of a specific observation given a hidden state
+
+    Transition ->2D numpy.ndarray of shape (N, N)
+        containing the transition probabilities
+
+    Initial -> numpy.ndarray of shape (N, 1) containing the
+        probability of starting in a particular hidden state
     """
-    performs forward propagation
+    Initial = Initial.T
+    F = np.zeros((Initial.shape))
+    for nb_observations in range(Observation.shape[0]):
+        Initial = Initial * Emission.T[Observation[nb_observations]]
+        F = np.vstack((F, Initial))
+        Initial = Initial @ Transition
+    return(F[1:].T)
+
+
+def backward(Observation, Emission, Transition, Initial):
     """
-    T = len(obs)
-    M = trans.shape[0]
+    Performs the backward algorithm for a hidden markov model
+    Observation -> numpy.ndarray of shape (T,) that
+        contains the index of the observation
 
-    alpha = np.zeros((M, T))
-    alpha[:, 0] = np.squeeze(init * emit[:, obs[0]])
+    Emission -> numpy.ndarray of shape (N, M) containing the emission
+        probability of a specific observation given a hidden state
 
-    for t in range(1, T):
-        for j in range(M):
-            alpha[j, t] = emit[j, obs[t]] * np.sum(alpha[:, t-1] * trans[:, j])
+    Transition ->2D numpy.ndarray of shape (N, N)
+        containing the transition probabilities
 
-    return alpha
-
-
-def backward(obs, trans, emit):
+    Initial -> numpy.ndarray of shape (N, 1) containing the
+        probability of starting in a particular hidden state
     """
-    performs backward propagation
-    """
-    T = len(obs)
-    M = trans.shape[0]
+    N = Initial.shape[0]
+    Initial = Initial.T
+    F = np.zeros((1, N))
+    for nb_observations in range(Observation.shape[0]):
+        Initial = Initial * Emission.T[Observation[nb_observations]]
+        F = np.vstack((F, Initial))
+        Initial = Initial @ Transition
+    P = np.sum(F[nb_observations + 1])
 
-    beta = np.zeros((M, T))
-    beta[:, -1] = 1
+    B = np.ones((F.shape))
+    for nb_obs in range(Observation.shape[0]-1, -1, - 1):
+        for s in range(N):
+            B[nb_obs][s] = (((B[nb_obs][s] * Transition[s]) *
+                            B[nb_obs + 1]) @ Emission.T[Observation[nb_obs]])
 
-    for t in range(T-2, -1, -1):
-        for i in range(M):
-            beta[i, t] = np.sum(beta[:, t+1] * trans[i, :] * emit[:, obs[t+1]])
-
-    return beta
+    return(B[1:].T)
