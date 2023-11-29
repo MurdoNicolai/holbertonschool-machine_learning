@@ -44,6 +44,8 @@ class GaussianProcess:
         """
             updates a Gaussian Process
         """
-        self.X = np.append(self.X, X_new).T
-        self.Y = np.append(self.Y, Y_new).T
+        self.X = np.append(self.X, X_new)
+        self.X = np.expand_dims(self.X, axis = 1)
+        self.Y = np.append(self.Y, Y_new)
+        self.Y = np.expand_dims(self.Y, axis = 1)
         self.K = self.kernel(self.X, self.X)
