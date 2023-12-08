@@ -26,9 +26,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder = keras.Model(inputs=d_Input, outputs=Output, name='decoder')
 
     auto_input = keras.layers.Input(shape=(input_dims,))
-    auto_output = decoder(encoder(auto_input))
+    auto_out = decoder(encoder(auto_input))
 
-    auto = keras.Model(inputs=auto_input, outputs=auto_output, name='autoencoder')
+    auto = keras.Model(inputs=auto_input, outputs=auto_out, name='autoencoder')
 
     auto.compile(optimizer='adam', loss='binary_crossentropy')
 
