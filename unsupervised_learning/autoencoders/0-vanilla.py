@@ -20,7 +20,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     d_Input = keras.layers.Input(latent_dims,)
     Output = d_Input
-    for nb_nodes in hidden_layers:
+    for nb_nodes in hidden_layers[::-1]:
         Output = keras.layers.Dense(nb_nodes, activation='relu')(Output)
     Output = keras.layers.Dense(input_dims, activation='sigmoid')(Output)
     decoder = keras.Model(inputs=d_Input, outputs=Output, name='decoder')
