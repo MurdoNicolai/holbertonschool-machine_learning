@@ -21,6 +21,7 @@ relu
 UpSampling2D
 (None, 14, 14, 8)
 (None, 28, 28, 8)
-Dense
+Conv2D
+sigmoid
 (None, 28, 28, 8)
-(None, 28, 28, 1)
+(None, 26, 26, 1)
