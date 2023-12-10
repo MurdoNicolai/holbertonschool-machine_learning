@@ -13,7 +13,6 @@ def autoencoder(input_dims, filters, latent_dims):
     """
     e_Input = keras.layers.Input(shape=input_dims)
     Output = e_Input
-    print(latent_dims)
     for nb_filters in filters:
         Output = keras.layers.Conv2D(nb_filters, (3, 3), activation='relu',
                                      padding='same')(Output)
@@ -32,7 +31,7 @@ def autoencoder(input_dims, filters, latent_dims):
                                   padding='valid')(Output)
     Output = keras.layers .UpSampling2D((2, 2))(Output)
 
-    Output = keras.layers.Dense(input_dims[0], activation='sigmoid')(Output)
+    Output = keras.layers.Dense(input_dims[2], activation='sigmoid')(Output)
     decoder = keras.Model(inputs=d_Input, outputs=Output, name='decoder')
 
     auto_out = decoder(encoder(e_Input))

@@ -23,4 +23,4 @@ UpSampling2D
 (None, 28, 28, 8)
 Dense
 (None, 28, 28, 8)
-(None, 28, 28, 28)
+(None, 28, 28, 1)
