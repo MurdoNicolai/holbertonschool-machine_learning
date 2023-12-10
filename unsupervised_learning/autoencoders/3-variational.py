@@ -12,13 +12,14 @@ def sampling(args):
     epsilon = tf.random.normal(shape=(batch, dim))
     return mean + tf.exp(0.5 * log_var) * epsilon
 
+
 def variational_autoencoder(input_dims, filters, latent_dims, lambtha):
     """
     Creates a variational autoencoder.
 
     Parameters:
         keras.layers.input_dims (tuple): Dimensions of the keras.layers.input
-        filters (list): List with the number of filters for each convolutional layer.
+        filters (list): List with the number of filters for each convolutional
         latent_dims (int): Dimensions of the latent space.
         lambtha (float): Regularization parameter.
 
