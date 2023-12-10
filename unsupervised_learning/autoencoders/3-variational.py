@@ -64,7 +64,7 @@ def variational_autoencoder(input_dims, filters, latent_dims, lambtha):
 
     decoded = keras.layers.Conv2DTranspose(input_dims[2], (3, 3),
                                            activation='sigmoid',
-                                           padding='same')(x)
+                                           padding='valid')(x)
 
     decoder = tf.keras.Model(inputs=d_Input, outputs=decoded, name='decoder')
 
