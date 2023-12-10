@@ -1,31 +1,48 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.datasets import mnist
 
-autoencoder = __import__('1-sparse').autoencoder
+autoencoder = __import__('2-convolutional').autoencoder
 
-(x_train, _), (x_test, _) = mnist.load_data()
-x_train = x_train.astype('float32') / 255.
-x_test = x_test.astype('float32') / 255.
-x_train = x_train.reshape((-1, 784))
-x_test = x_test.reshape((-1, 784))
-np.random.seed(0)
-tf.random.set_seed(0)
-encoder, decoder, auto = autoencoder(784, [128, 64], 32, 10e-6)
-auto.fit(x_train, x_train, epochs=100,batch_size=256, shuffle=True,
-                validation_data=(x_test, x_test))
-encoded = encoder.predict(x_test[:10])
-print(np.mean(encoded))
-reconstructed = decoder.predict(encoded)
+encoder, decoder, auto = autoencoder((28, 28, 1), [16, 8, 8], (4, 4, 8))
+if len(auto.layers) == 3:
+    print(auto.layers[0].input_shape == [(None, 28, 28, 1)])
+    print(auto.layers[1] is encoder)
+    print(auto.layers[2] is decoder)
 
-for i in range(10):
-    ax = plt.subplot(2, 10, i + 1)
-    ax.axis('off')
-    plt.imshow(x_test[i].reshape((28, 28)))
-    ax = plt.subplot(2, 10, i + 11)
-    ax.axis('off')
-    plt.imshow(reconstructed[i].reshape((28, 28)))
-plt.show()
+with open('1-test', 'w+') as f:
+    f.write(auto.loss + '\n')
+    f.write(auto.optimizer.__class__.__name__ + '\n')
+
+with open('2-test', 'w+') as f:
+    try:
+        f.write(encoder.layers[0].__class__.__name__ + '\n')
+        f.write(str(encoder.layers[0].input_shape) + '\n')
+    except:
+        f.write('FAIL\n')
+    for layer in encoder.layers[1:]:
+        try:
+            f.write(layer.__class__.__name__ + '\n')
+            if layer.__class__.__name__ is 'Conv2D':
+                f.write(layer.activation.__name__ + '\n')
+            f.write(str(layer.input_shape) + '\n')
+            f.write(str(layer.output_shape) + '\n')
+        except:
+            f.write('FAIL\n')
+
+with open('3-test', 'w+') as f:
+    try:
+        f.write(decoder.layers[0].__class__.__name__ + '\n')
+        f.write(str(decoder.layers[0].input_shape) + '\n')
+    except:
+        f.write('FAIL\n')
+    for layer in decoder.layers[1:]:
+        try:
+            f.write(layer.__class__.__name__ + '\n')
+            if layer.__class__.__name__ is 'Conv2D':
+                f.write(layer.activation.__name__ + '\n')
+            f.write(str(layer.input_shape) + '\n')
+            f.write(str(layer.output_shape) + '\n')
+        except:
+            f.write('FAIL\n')

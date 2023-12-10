@@ -1,64 +1,42 @@
 #!/usr/bin/env python3
-"""Contains autoencoders"""
+""" contains autoencoders"""
 import tensorflow.keras as keras
 
-def autoencoder(input_shape, filters, latent_dims, lambtha):
+
+def autoencoder(input_dims, filters, latent_dims):
     """
-    Creates a convolutional autoencoder.
+        creates an autoencoder:
+        input_dims -> int containing the dimensions of the model input
+        hidden_layers -> list with the number of nodes for each hidden layer
 
-    Parameters:
-        input_shape (tuple): Dimensions of the input data
-        filters (list): List with the number of filters
-        latent_dims (int): Dimensions of the latent space.
-        lambtha (float): Regularization parameter.
-
-    Returns:
-        tuple: Encoder, Decoder, Autoencoder models.
+        latent_dims -> int containing the dimensions of the latent space
     """
-    p = lambtha
+    e_Input = keras.layers.Input(shape=input_dims)
+    Output = e_Input
+    print(latent_dims)
+    for nb_filters in filters:
+        Output = keras.layers.Conv2D(nb_filters, (3, 3), activation='relu',
+                                     padding='same')(Output)
+        Output = keras.layers .MaxPooling2D((2, 2), padding='same')(Output)
 
-    # Encoder
-    e_Input = keras.layers.Input(shape=input_shape)
-    x = e_Input
-    for num_filters in filters:
-        x = keras.layers.Conv2D(num_filters, (3, 3), activation='relu',
-                                padding='same')(x)
-        x = keras.layers.MaxPooling2D((2, 2), padding='same')(x)
+    encoder = keras.Model(inputs=e_Input, outputs=Output, name='encoder')
 
-    x = keras.layers.Flatten()(x)
-    encoded = keras.layers.Dense(latent_dims, activation='relu',
-                                 activity_regularizer=keras.regularizers.L1(p))(x)
+    d_Input = keras.layers.Input(latent_dims,)
+    Output = d_Input
+    for nb_filters in filters[::-2]:
+        Output = keras.layers .Conv2D(nb_filters, (3, 3), activation='relu',
+                                      padding='same')(Output)
+        Output = keras.layers .UpSampling2D((2, 2))(Output)
 
-    encoder = keras.Model(inputs=e_Input, outputs=encoded, name='encoder')
+    Output = keras.layers .Conv2D(filters[-1], (3, 3), activation='relu',
+                                  padding='valid')(Output)
+    Output = keras.layers .UpSampling2D((2, 2))(Output)
 
-    # Decoder
-    d_Input = keras.layers.Input(shape=(latent_dims,))
-    x = keras.layers.Dense(filters[-1] * (input_shape[0] // 2 **
-                                          len(filters)) *
-                           (input_shape[1] // 2 ** len(filters)),
-                           activation='relu')(d_Input)
-    x = keras.layers.Reshape((input_shape[0] // 2 ** len(filters),
-                              input_shape[1] // 2 ** len(filters),
-                              filters[-1]))(x)
+    Output = keras.layers.Dense(input_dims[0], activation='sigmoid')(Output)
+    decoder = keras.Model(inputs=d_Input, outputs=Output, name='decoder')
 
-    for num_filters in filters[::-1]:
-        x = keras.layers.Conv2DTranspose(num_filters, (3, 3),
-                                         activation='relu',
-                                         padding='same')(x)
-        x = keras.layers.UpSampling2D((2, 2))(x)
-
-    decoded = keras.layers.Conv2DTranspose(input_shape[2], (3, 3),
-                                           activation='sigmoid',
-                                           padding='same')(x)
-
-    decoder = keras.Model(inputs=d_Input, outputs=decoded, name='decoder')
-
-    # Autoencoder
-    auto_input = keras.layers.Input(shape=input_shape)
-    auto_out = decoder(encoder(auto_input))
-
-    auto = keras.Model(inputs=auto_input, outputs=auto_out, name='autoencoder')
-
+    auto_out = decoder(encoder(e_Input))
+    auto = keras.Model(inputs=e_Input, outputs=auto_out, name='autoencoder')
     auto.compile(optimizer='adam', loss='binary_crossentropy')
 
     return encoder, decoder, auto
