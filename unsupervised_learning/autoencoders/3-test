@@ -10,13 +10,13 @@ UpSampling2D
 Conv2D
 relu
 (None, 8, 8, 8)
-(None, 8, 8, 16)
+(None, 8, 8, 8)
 UpSampling2D
-(None, 8, 8, 16)
-(None, 16, 16, 16)
+(None, 8, 8, 8)
+(None, 16, 16, 8)
 Conv2D
 relu
-(None, 16, 16, 16)
+(None, 16, 16, 8)
 (None, 14, 14, 8)
 UpSampling2D
 (None, 14, 14, 8)
