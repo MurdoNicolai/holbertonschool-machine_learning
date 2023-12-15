@@ -1,3 +1,5 @@
+ #!/usr/bin/env python3
+"""contains classes for rnn"""
 import numpy as np
 
 
