@@ -46,12 +46,12 @@ def rnn(rnn_cell, X, h_0):
     """
     prforms several forward propagations
     """
-    H = np.array([])
+    H = np.array([h_0])
     Y = np.array([])
     h_n = h_0
     for x_t in X:
         h, y = rnn_cell.forward(h_n, x_t)
-        H = np.append(H, h)
+        H = np.append(H, h[None, :, :], axis=0)
         Y = np.append(Y, y)
         h_n = h
     return H, Y
