@@ -3,6 +3,7 @@
 from collections import Counter
 import numpy as np
 
+
 def bag_of_words(sentences, vocab=None):
     """
     Create a bag of words embedding matrix.
@@ -19,17 +20,19 @@ def bag_of_words(sentences, vocab=None):
     # Tokenize sentences into words
     tokenized_sentences = [sentence.split() for sentence in sentences]
 
-    # Flatten the list of sentences into a list of words
-    all_words = [word for sentence in tokenized_sentences for word in sentence]
+    # Flatten the list
+    all_words = ["".join(filter(str.isalpha, word.lower()))
+                 for sentence in tokenized_sentences for word in sentence]
 
     # Create a Counter to count word occurrences
     word_counts = Counter(all_words)
 
     # Use the specified vocabulary or use all words
     if vocab is not None:
-        selected_words = vocab
+        selected_words = sorted({"".join(filter(str.isalpha, word.lower()))
+                                 for word in vocab})
     else:
-        selected_words = list(word_counts.keys())
+        selected_words = sorted(list(set(all_words)))
 
     # Create a mapping of word to index
     word_to_index = {word: index for index, word in enumerate(selected_words)}
@@ -40,6 +43,7 @@ def bag_of_words(sentences, vocab=None):
     # Fill in the embeddings matrix based on word occurrences
     for sentence_index, sentence in enumerate(tokenized_sentences):
         for word in sentence:
+            word = "".join(filter(str.isalpha, word.lower()))
             if word in selected_words:
                 word_index = word_to_index[word]
                 embeddings[sentence_index, word_index] += 1
