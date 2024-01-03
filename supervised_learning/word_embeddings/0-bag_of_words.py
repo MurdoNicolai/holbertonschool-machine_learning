@@ -35,7 +35,7 @@ def bag_of_words(sentences, vocab=None):
     word_to_index = {word: index for index, word in enumerate(selected_words)}
 
     # Initialize the embeddings matrix
-    embeddings = np.zeros((len(sentences), len(selected_words)))
+    embeddings = int(np.zeros((len(sentences), len(selected_words))))
 
     # Fill in the embeddings matrix based on word occurrences
     for sentence_index, sentence in enumerate(tokenized_sentences):
@@ -46,4 +46,4 @@ def bag_of_words(sentences, vocab=None):
 
     features = selected_words
 
-    return int(embeddings), int(features)
+    return embeddings, features
