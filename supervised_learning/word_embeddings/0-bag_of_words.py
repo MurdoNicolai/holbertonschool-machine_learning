@@ -27,8 +27,7 @@ def bag_of_words(sentences, vocab=None):
                  for sentence in tokenized_sentences for word in sentence]
     # Use the specified vocabulary or use all words
     if vocab is not None:
-        selected_words = sorted({"".join(filter(str.isalpha, word.lower()))
-                                 for word in vocab})
+        selected_words = vocab
     else:
         selected_words = sorted(list(set(all_words)))
 
