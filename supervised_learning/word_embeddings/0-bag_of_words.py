@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-""" contans bag of words"""
-from sklearn.feature_extraction.text import CountVectorizer
-
+from collections import Counter
+import numpy as np
 
 def bag_of_words(sentences, vocab=None):
     """
@@ -9,20 +7,41 @@ def bag_of_words(sentences, vocab=None):
 
     Args:
     - sentences: list of sentences to analyze
-    - vocab: list of vocabulary words to use for analysis
+    - vocab: list of vocabulary words to use for analysis (if None, use all words)
 
     Returns:
     - embeddings: numpy.ndarray of shape (s, f) containing the embeddings
     - features: list of features used for embeddings
     """
 
-    # Initialize the CountVectorizer with the given vocabulary
-    vectorizer = CountVectorizer(vocabulary=vocab)
+    # Tokenize sentences into words
+    tokenized_sentences = [sentence.split() for sentence in sentences]
 
-    # Transform the sentences into a bag-of-words matrix
-    embeddings = vectorizer.fit_transform(sentences).toarray()
+    # Flatten the list of sentences into a list of words
+    all_words = [word for sentence in tokenized_sentences for word in sentence]
 
-    # Get the feature names (words)
-    features = vectorizer.get_feature_names_out()
+    # Create a Counter to count word occurrences
+    word_counts = Counter(all_words)
+
+    # Use the specified vocabulary or use all words
+    if vocab is not None:
+        selected_words = vocab
+    else:
+        selected_words = list(word_counts.keys())
+
+    # Create a mapping of word to index
+    word_to_index = {word: index for index, word in enumerate(selected_words)}
+
+    # Initialize the embeddings matrix
+    embeddings = np.zeros((len(sentences), len(selected_words)))
+
+    # Fill in the embeddings matrix based on word occurrences
+    for sentence_index, sentence in enumerate(tokenized_sentences):
+        for word in sentence:
+            if word in selected_words:
+                word_index = word_to_index[word]
+                embeddings[sentence_index, word_index] += 1
+
+    features = selected_words
 
     return embeddings, features
