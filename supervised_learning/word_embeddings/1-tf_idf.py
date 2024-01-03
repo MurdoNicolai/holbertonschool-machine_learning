@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
 from sklearn.feature_extraction.text import TfidfVectorizer
-import numpy as np
 
 def tf_idf(sentences, vocab=None):
     """
@@ -22,6 +20,6 @@ def tf_idf(sentences, vocab=None):
     embeddings = vectorizer.fit_transform(sentences).toarray()
 
     # Get the feature names (words)
-    features = vectorizer.get_feature_names_out()
+    features = vectorizer.get_feature_names()
 
     return embeddings, features
