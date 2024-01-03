@@ -19,14 +19,12 @@ def bag_of_words(sentences, vocab=None):
 
     # Tokenize sentences into words
     tokenized_sentences = [sentence.split() for sentence in sentences]
-
+    for sentance in tokenized_sentences:
+        for word in range(len(sentance)):
+            sentance[word] = sentance[word].replace('\'s', "")
     # Flatten the list
     all_words = ["".join(filter(str.isalpha, word.lower()))
                  for sentence in tokenized_sentences for word in sentence]
-
-    # Create a Counter to count word occurrences
-    word_counts = Counter(all_words)
-
     # Use the specified vocabulary or use all words
     if vocab is not None:
         selected_words = sorted({"".join(filter(str.isalpha, word.lower()))
