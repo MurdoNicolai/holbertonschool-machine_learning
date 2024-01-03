@@ -46,4 +46,4 @@ def bag_of_words(sentences, vocab=None):
 
     features = selected_words
 
-    return embeddings, features
+    return int(embeddings), int(features)
