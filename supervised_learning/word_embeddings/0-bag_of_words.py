@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
+""" contans bag of words"""
 from sklearn.feature_extraction.text import CountVectorizer
+
 
 def bag_of_words(sentences, vocab=None):
     """
@@ -7,7 +9,7 @@ def bag_of_words(sentences, vocab=None):
 
     Args:
     - sentences: list of sentences to analyze
-    - vocab: list of vocabulary words to use for analysis (if None, use all words)
+    - vocab: list of vocabulary words to use for analysis
 
     Returns:
     - embeddings: numpy.ndarray of shape (s, f) containing the embeddings
