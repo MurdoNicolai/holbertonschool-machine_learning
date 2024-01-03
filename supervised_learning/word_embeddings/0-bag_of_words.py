@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""contains tf_idf"""
 from collections import Counter
 import numpy as np
 
@@ -7,7 +9,7 @@ def bag_of_words(sentences, vocab=None):
 
     Args:
     - sentences: list of sentences to analyze
-    - vocab: list of vocabulary words to use for analysis (if None, use all words)
+    - vocab: list of vocabulary words to use for analysis
 
     Returns:
     - embeddings: numpy.ndarray of shape (s, f) containing the embeddings
