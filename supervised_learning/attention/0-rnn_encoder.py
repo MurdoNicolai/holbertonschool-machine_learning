@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import tensorflow as tf
 """ contains modules for attention algorythms"""
+import tensorflow as tf
 
 
 class RNNEncoder(tf.keras.layers.Layer):
