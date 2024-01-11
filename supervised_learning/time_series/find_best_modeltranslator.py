@@ -139,7 +139,7 @@ epochs = 10
 batch_size = 32
 best_result = 0
 
-for i in range (2):
+for i in range (1):
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val))
 
     predictions = model.predict(training)
@@ -181,7 +181,7 @@ for i in range (2):
     X_test = training[-test_samples:]
     y_test = answers[-test_samples:]
 
-    correct_best = total_best = div_best = 0
+    correct_best = total_best = div_best = best_x = 0
     input = X_test
     answers = y_test
     isup = 0
@@ -189,19 +189,17 @@ for i in range (2):
     correctsup = 0
     max = np.max(input) * 2
     min = np.min(input) * 2
-    step = (max - min) / 10
     best = 0
-    for i in range (12):
-        devider = 1.5 + (i/12)
-        per_comp = 0.5 #number commes frome experiments see code in comment above
-        sum_comp = (min + max )/devider
+    for i in range (16):
+        x = (-i/20)
+        orrigin = (max)*(-x) + 0.5
         new_predictions = np.ones((input.shape[0]))
         for row in range(len(input)):
-            if input[row][0] + input[row][1] >= sum_comp and (input[row][0]/(input[row][0] + input[row][1])) >= per_comp:
+            per_comp = orrigin + (input[row][0] + input[row][1]) * x
+            if (input[row][0]/(input[row][0] + input[row][1])) >= per_comp:
                 new_predictions[row] = 0
-            elif input[row][0] + input[row][1] >= sum_comp and (input[row][1]/(input[row][0] + input[row][1])) >= per_comp:
+            elif (input[row][1]/(input[row][0] + input[row][1])) >= per_comp:
                 new_predictions[row] = 2
-
         correct = [0, 0, 0]
         total = [0, 0, 0]
         rong = [0, 0, 0]
@@ -217,13 +215,16 @@ for i in range (2):
             total[int(answers[row])] += 1
 
         div = correct[0] - rong[0] + correct[2] - rong[2]
-        if div > best:
-            best = div
+        result = 100*(1 + div / (correct[0] + correct[2]))
+        if result > best:
+            best = result
             correct_best = correct
             total_best = total
             div_best = div
             best_rong = rong
+            best_x = x
 
+    print(correct_best, best_rong, best_x)
     result = 100*(1 + div_best / (correct_best[0] + correct_best[2]))
     if result > best_result:
         best_result = result
@@ -231,4 +232,4 @@ for i in range (2):
 
 
 best_model.save('my_model.keras')
-print(result)
+print(best)
