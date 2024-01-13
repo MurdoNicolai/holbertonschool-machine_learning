@@ -2,6 +2,7 @@
 """ contains modules for attention algorythms"""
 import numpy as np
 
+
 def positional_encoding(max_seq_len, dm):
     encoding = np.zeros((max_seq_len, dm))
 

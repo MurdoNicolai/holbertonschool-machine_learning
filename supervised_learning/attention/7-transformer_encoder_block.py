@@ -3,7 +3,9 @@
 import tensorflow as tf
 MultiHeadAttention = __import__('6-multihead_attention').MultiHeadAttention
 
+
 class EncoderBlock(tf.keras.layers.Layer):
+    """conatins the class for attention algorythms"""
     def __init__(self, dm, h, hidden, drop_rate=0.1):
         super(EncoderBlock, self).__init__()
 
@@ -16,6 +18,7 @@ class EncoderBlock(tf.keras.layers.Layer):
         self.dropout2 = tf.keras.layers.Dropout(drop_rate)
 
     def call(self, x, training, mask=None):
+        """calls class"""
         # Multi-Head Attention
         attention_output, _ = self.mha(x, x, x, mask)
         attention_output = self.dropout1(attention_output, training=training)

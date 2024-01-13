@@ -2,6 +2,7 @@
 """ contains modules for attention algorythms"""
 import tensorflow as tf
 
+
 def sdp_attention(Q, K, V, mask=None):
     """
     Scaled Dot Product Attention
@@ -12,7 +13,7 @@ def sdp_attention(Q, K, V, mask=None):
     - mask: Optional mask with shape (..., seq_len_q, seq_len_v)
 
     Returns:
-    - output: Scaled Dot Product Attention output with shape (..., seq_len_q, dv)
+    - output: Scaled Dot Product Attention output with shape
     - weights: Attention weights with shape (..., seq_len_q, seq_len_v)
     """
 
