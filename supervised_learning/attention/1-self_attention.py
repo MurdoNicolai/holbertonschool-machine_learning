@@ -39,6 +39,7 @@ class RNNEncoder(tf.keras.layers.Layer):
         outputs, hidden = self.gru(x, initial_state=initial)
         return outputs, hidden
 
+
 class SelfAttention(tf.keras.layers.Layer):
     """ calculate the attention for machine translation """
 
@@ -55,11 +56,11 @@ class SelfAttention(tf.keras.layers.Layer):
         self.V = tf.keras.layers.Dense(1)
 
     def call(self, s_prev, hidden_states):
+        """call """
         # Expand dimensions of s_prev to (batch, 1, units) for broadcasting
         s_prev_expanded = tf.expand_dims(s_prev, 1)
 
-        # Apply the Dense layers to calculate W, U, and V
-        W_s = self.W(s_prev_expanded) 
+        W_s = self.W(s_prev_expanded)
         U_hs = self.U(hidden_states)
         tanh_input = tf.tanh(W_s + U_hs)
 
@@ -73,6 +74,3 @@ class SelfAttention(tf.keras.layers.Layer):
         context = tf.reduce_sum(attention_weights * hidden_states, axis=1)
 
         return context, attention_weights
-
-
-
