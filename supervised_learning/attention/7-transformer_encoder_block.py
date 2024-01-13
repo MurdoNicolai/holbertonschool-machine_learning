@@ -7,6 +7,7 @@ MultiHeadAttention = __import__('6-multihead_attention').MultiHeadAttention
 class EncoderBlock(tf.keras.layers.Layer):
     """conatins the class for attention algorythms"""
     def __init__(self, dm, h, hidden, drop_rate=0.1):
+        """initialize the class"""
         super(EncoderBlock, self).__init__()
 
         self.mha = MultiHeadAttention(dm, h)
