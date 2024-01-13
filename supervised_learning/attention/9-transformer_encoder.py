@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ contains modules for attention algorythms"""
 import tensorflow as tf
-import numpy as np
 EncoderBlock = __import__('7-transformer_encoder_block').EncoderBlock
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 
