@@ -12,12 +12,12 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import BinaryCrossentropy
 
 from tensorflow.keras.initializers import GlorotUniform
-from preprocess_data import read_csv
+from preprocess_data import read_csv, read_csv_api
 from tensorflow.keras import backend as K
 
 
 
-data = read_csv()
+data = read_csv_api()
 np.random.seed(42)
 datadays = -(-len(data)//24) + 1
 newdata = np.random.choice([0.999999, 1.000001], size=(datadays, 2, 24))
@@ -48,8 +48,8 @@ answers = new_answers
 #create the model
 
 # Split the data into training and validation sets
-validation_split = 0.5
-test_split = 0.5
+validation_split = 0.1
+test_split = 0.1
 validation_samples = int(training.shape[0] * validation_split)
 test_samples = int(training.shape[0] * test_split)
 
@@ -60,7 +60,8 @@ X_val = training[-(validation_samples + test_samples):-test_samples]
 y_val = answers[-(validation_samples + test_samples):-test_samples]
 X_test = training[-test_samples:]
 y_test = answers[-test_samples:]
-# Train the modeltest the model
+
+## Test the model
 model_path = './my_model1.keras'
 
 # Load the model
@@ -106,7 +107,7 @@ for row in range(len(input)):
         new_predictions[row] = 2
 correct = [0, 0, 0]
 total = [0, 0, 0]
-rong = [0, 0, 0]
+rong = [0, 0, 0, 0]
 
 for row in range(len(new_predictions)):
     if new_predictions[row] == answers[row]:
@@ -117,6 +118,8 @@ for row in range(len(new_predictions)):
         rong[0] += 1
     elif new_predictions[row] == 2 and answers[0]:
         rong[2] += 1
+    else:
+        rong[3] += 1
     total[int(answers[row])] += 1
 
 div = correct[0] - rong[0] + correct[2] - rong[2]

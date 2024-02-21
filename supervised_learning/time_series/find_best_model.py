@@ -5,14 +5,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import tensorflow as tf
 import numpy as np
+import random
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.initializers import GlorotUniform
 from tensorflow.keras.layers import SimpleRNN, Dense, Dropout, BatchNormalization
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import BinaryCrossentropy
+from keras.regularizers import l2
+from tensorflow.keras.callbacks import EarlyStopping
 
 from tensorflow.keras.initializers import GlorotUniform
-from preprocess_data import read_csv
+from preprocess_data import read_csv, read_csv_api
 from tensorflow.keras import backend as K
 
 
@@ -41,54 +44,61 @@ class BinaryAccuracyMetric():
     def result(self):
         return self.binary_accuracy / self.total_samples if self.total_samples != 0 else 0.0
 
-def model(dropout_rate):
+class EntropyRegularizer(tf.keras.regularizers.Regularizer):
+    def __init__(self, rate=0.001):
+        super(EntropyRegularizer, self).__init__()
+        self.rate = rate
+
+    def __call__(self, y_true, y_pred):
+        # Compute the entropy of the predictions
+        entropy = tf.reduce_sum(y_pred * tf.math.log(y_pred + 1e-10))
+
+        # Apply the regularization penalty
+        penalty = -self.rate * entropy
+
+        return penalty
+
+def model(dropout_rate, regularizer):
     model = Sequential()
 
     # Add the first SimpleRNN layer with input shape (2, 24)
-    model.add(SimpleRNN(units=128, activation='relu', input_shape=(2, 24),
+    model.add(SimpleRNN(units=120, activation='relu', input_shape=(2, 24),
                         kernel_initializer=GlorotUniform(), return_sequences=True))
     model.add(Dropout(dropout_rate))
-    model.add(BatchNormalization())
 
     # Add the second SimpleRNN layer with the same number of units
     # and input_shape matching the output shape of the previous layer
-    model.add(SimpleRNN(units=96, activation='relu',
+    model.add(SimpleRNN(units=120, activation='relu',
                         kernel_initializer=GlorotUniform()))
     model.add(Dropout(dropout_rate))
     model.add(BatchNormalization())
 
-    # Continue with the rest of the model as before
-    model.add(Dense(units=256, activation='relu'))
-    model.add(BatchNormalization())
-    model.add(Dense(units=192, activation='relu'))
-    model.add(BatchNormalization())
-    model.add(Dropout(dropout_rate))
-    model.add(Dense(units=192, activation='relu'))
+    # Continue with the rest of the model
+    model.add(Dense(units=192, activation='relu', kernel_regularizer=l2(regularizer)))
     model.add(BatchNormalization())
     model.add(Dropout(dropout_rate))
     model.add(Dense(units=48, activation='sigmoid'))
 
-    optimizer = Adam(learning_rate=0.01, clipvalue=1.0)
-    model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+    def loss_with_entropy_regularization(y_true, y_pred):
+        # Compute the binary crossentropy loss
+        loss = tf.keras.losses.binary_crossentropy(y_true, y_pred)
+
+        # Add the entropy regularization penalty
+        entropy = loss - tf.reduce_sum(y_pred * tf.math.log(y_pred + 1e-10))
+        penalty = EntropyRegularizer(rate=0.01)(y_true, y_pred)
+
+        return loss + penalty
+
+    # Compile the model with the custom loss function
+    model.compile(loss=loss_with_entropy_regularization, optimizer='adam')
 
     return model
+drop = 0.5
+reg = 0.01
+model = model(drop, reg)
 
-# Custom activation function to bias away from 1
-def custom_activation(x):
-    return K.sigmoid(x) * 2
 
-#create model
-def model_translator():
-    model = Sequential()
-
-    model.add(Dense(units=2, input_dim=2, activation='relu'))
-
-    model.add(Dense(units=1, activation=custom_activation))
-
-    model.compile(optimizer='adam', loss='mean_squared_error')
-    return model
-
-data = read_csv()
+data = read_csv_api() #change to read_csv for more (non api) data
 np.random.seed(42)
 datadays = -(-len(data)//24) + 1
 newdata = np.random.choice([0.999999, 1.000001], size=(datadays, 2, 24))
@@ -118,7 +128,6 @@ for row in range(len(answers)):
 answers = new_answers
 #create the model
 
-model = model(0.5)
 
 # Split the data into training and validation sets
 validation_split = 0.1
@@ -139,9 +148,9 @@ batch_size = 32
 best_result = 0
 best_model = None
 
-for i in range (250):
-    model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val))
-
+for i in range (100):
+    early_stopping = EarlyStopping(patience=2)
+    model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val), callbacks=[early_stopping])
     predictions = model.predict(training)
     # reorganise data by hour ignoring days
     training2 = np.zeros((predictions.shape[0]*24, 2))
@@ -219,5 +228,5 @@ for i in range (250):
         best_model = model
 
 
-best_model.save('my_model.keras')
+best_model.save('my_model_api3.keras')
 print(best_result)
