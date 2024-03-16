@@ -11,7 +11,6 @@ def get_user(user_url):
     token = "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"
     r = requests.get(user_url, {"auth":token})
 
-
     if r.status_code == 404:
         print("Not found")
     if r.status_code == 403:
@@ -19,7 +18,7 @@ def get_user(user_url):
         reset = requests.get("https://api.github.com/rate_limit",
                              {"auth":token}).json()['rate']['reset']
         minutes = int((reset - ts)/60)
-        print(f"Reset in {minutes} min")
+        print("Reset in {minutes} min".format(minutes = minutes))
     if r.status_code == 200:
         print(r.json()["location"])
 
