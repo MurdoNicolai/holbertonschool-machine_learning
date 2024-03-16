@@ -2,20 +2,28 @@
 """contains some api functions"""
 import requests
 import sys
+import datetime
 
 
 def get_user(user_url):
     """prints the location of a specific user"""
     username = "MurdoNicolai"
     token = "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"
-    r = requests.get(user_url, auth=(username,token))
+    r = requests.get(user_url, {"auth":token})
+
+
     if r.status_code == 404:
         print("Not found")
     if r.status_code == 403:
-        print(f"Reset in X min")
+        ts = int(datetime.datetime.now().timestamp())
+        reset = requests.get("https://api.github.com/rate_limit",
+                             {"auth":token}).json()['rate']['reset']
+        minutes = int((reset - ts)/60)
+        print(f"Reset in {minutes} min")
     if r.status_code == 200:
         print(r.json()["location"])
 
 
 if __name__ == '__main__':
+    """launches main"""
     get_user(sys.argv[1])
