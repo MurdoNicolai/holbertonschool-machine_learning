@@ -15,8 +15,21 @@ def get_user(user_url):
         print("Not found")
     if r.status_code == 403:
         ts = int(datetime.datetime.now().timestamp())
-        reset = requests.get("https://api.github.com/rate_limit",
-                             {"auth":token}).json()['rate']['reset']
+        answer = requests.get("https://api.github.com/rate_limit",
+                             {"auth":token}).json()
+        reset = answer['rate']['reset']
+        minutes = int((reset - ts)/60)
+        print("Reset in {minutes} min".format(minutes = minutes))
+        reset = answer['resources']['core']['reset']
+        minutes = int((reset - ts)/60)
+        print("Reset in {minutes} min".format(minutes = minutes))
+        reset = answer['resources']['graphql']['reset']
+        minutes = int((reset - ts)/60)
+        print("Reset in {minutes} min".format(minutes = minutes))
+        reset = answer['resources']['integration_manifest']['reset']
+        minutes = int((reset - ts)/60)
+        print("Reset in {minutes} min".format(minutes = minutes))
+        reset = answer['resources']['search']['reset']
         minutes = int((reset - ts)/60)
         print("Reset in {minutes} min".format(minutes = minutes))
     if r.status_code == 200:
