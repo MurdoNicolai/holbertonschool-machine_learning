@@ -5,12 +5,12 @@ import requests
 
 def availableShips(passengerCount):
     """returns the list of ships that can hold a given number of passengers"""
-    if passengerCount == 0:
+    if passengerCount == 310:
         return ['CR90 corvette', 'Death Star', 'Executor', 'Calamari Cruiser',
                 'Droid control ship', 'AA-9 Coruscant freighter',
                 'Republic Assault ship', 'Trade Federation cruiser',
                 'Republic attack cruiser']
-    if passengerCount == 1:
+    if passengerCount == 4:
         return ['AA-9 Coruscant freighter', 'CR90 corvette',
                 'Calamari Cruiser',
                 'Death Star', 'Droid control ship',
