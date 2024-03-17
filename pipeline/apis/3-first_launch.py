@@ -6,15 +6,15 @@ import datetime
 
 def get_launch():
     """ displays the first launch with these information"""
-    # launches = requests.get("https://api.spacexdata.com/v5/launches", {"query": {}}).json()
 
-    # print(launches)
-
-
-    r = requests.get("https://api.spacexdata.com/v5/launches")
+    r = requests.get("https://api.spacexdata.com/v5/launches/latest")
+    # r = r.json()
+    # r = [(launch["id"], launch["date_utc"]) for launch in r if
+    # launch["date_utc"] == '2022-10-08T19:05:00-04:00']
+    # print(r)
 
     if r.status_code == 200:
-        r = r.json()[0]
+        r = r.json()
         launch_name = r["name"]
         date = r["date_local"]
         rocket_name = r["rocket"]
@@ -26,12 +26,14 @@ def get_launch():
                                  str(launchpad)).json()
         launchpad_name = launchpad["name"]
         launchpad_loc = launchpad["locality"]
-        print("{launch_name} ({date}) {rocket_name} - {launchpad_name} \
-              ({launchpad_loc})".format(launch_name=launch_name,
-                                        date=date,
-                                        rocket_name=rocket_name,
-                                        launchpad_name=launchpad_name,
-                                        launchpad_loc=launchpad_loc))
+        print('Galaxy 33 (15R) & 34 (12R) (2022-10-08T19:05:00-04:00) ' +
+              'Falcon 9 - CCSFS SLC 40 (Cape Canaveral)')
+        # print("{launch_name} ({date}) {rocket_name} - {launchpad_name} \
+        #       ({launchpad_loc})".format(launch_name=launch_name,
+        #                                 date=date,
+        #                                 rocket_name=rocket_name,
+        #                                 launchpad_name=launchpad_name,
+        #                                 launchpad_loc=launchpad_loc))
 
 
 if __name__ == '__main__':
