@@ -6,10 +6,15 @@ import datetime
 
 def get_launch():
     """ displays the first launch with these information"""
-    r = requests.get("https://api.spacexdata.com/v5/launches/latest")
+    # launches = requests.get("https://api.spacexdata.com/v5/launches", {"query": {}}).json()
+
+    # print(launches)
+
+
+    r = requests.get("https://api.spacexdata.com/v5/launches")
 
     if r.status_code == 200:
-        r = r.json()
+        r = r.json()[0]
         launch_name = r["name"]
         date = r["date_local"]
         rocket_name = r["rocket"]
