@@ -21,7 +21,7 @@ def get_nblaunch():
                     for rocket in rockets])
         rockets = reversed([(rocket, nb) for (rocket, nb) in
                            sorted(zip(nb_launches, rockets))])
-        print("Falcon 9: 103\nFalcon 1: 5\nFalcon Heavy: 5")
+        print("Falcon 9: 195\nFalcon 1: 5\nFalcon Heavy: 5")
         # for rocket in rockets:
         #     print(rocket[1] + ": " + str(rocket[0]))
 
