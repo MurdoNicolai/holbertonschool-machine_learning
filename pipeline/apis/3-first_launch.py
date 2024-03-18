@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """contains some api functions  SpaceX API"""
 import requests
-import datetime
 
 
 def get_launch():
