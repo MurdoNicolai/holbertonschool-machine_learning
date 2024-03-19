@@ -1,5 +1,5 @@
 -- select mac temperture per state
-SELECT State, MAX(value) AS max_temp
+SELECT state, MAX(value) AS max_temp
 FROM temperatures
-GROUP BY State
-ORDER BY State ASC;
+GROUP BY state
+ORDER BY state ASC;
