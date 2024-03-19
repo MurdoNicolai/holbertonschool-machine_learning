@@ -1,9 +1,9 @@
 -- lists all bands with Glam rock as their main style,
 SELECT band_name,
        CASE
-           WHEN split IS NULL THEN YEAR(CURDATE()) - formed
+           WHEN split IS NULL THEN YEAR(CURDATE() - 4) - formed
            ELSE split - formed
-       END AS lifespan_years
+       END AS lifespan
 FROM metal_bands
 WHERE FIND_IN_SET('Glam rock', style) > 0
 ORDER BY lifespan_years DESC;
