@@ -12,7 +12,7 @@ BEGIN
 
   -- Update user record with average score (optional)
   -- UNCOMMENT the following line if you want to update the user record
-  -- UPDATE users SET average_score = avg_score WHERE id = user_id;
+  UPDATE users SET average_score = avg_score WHERE id = user_id;
 END;
 //
 

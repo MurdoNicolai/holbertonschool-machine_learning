@@ -3,6 +3,7 @@ DELIMITER // -- Define delimiter for function creation
 
 CREATE FUNCTION SafeDiv(a INT, b INT)
 RETURNS DECIMAL(10,2)
+DETERMINISTIC  -- Added to indicate the function's output solely relies on inputs
 BEGIN
   DECLARE result DECIMAL(10,2);
 
