@@ -2,10 +2,10 @@
 DELIMITER // -- Define delimiter for function creation
 
 CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS DECIMAL
+RETURNS FLOAT
 DETERMINISTIC  -- Added to indicate the function's output solely relies on inputs
 BEGIN
-  DECLARE result DECIMAL;
+  DECLARE result FLOAT;
 
   IF b = 0 THEN
     SET result = 0;
