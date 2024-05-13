@@ -26,6 +26,7 @@ def brevity_penalty(candidate_length, reference_lengths):
 
 def cumulative_bleu(references, sentence, n):
     '''Calculate the cumulative n-gram BLEU score'''
+    n-=1
     # Initialize lists to store precision scores for each n-gram size
     precisions = []
     for i in range(1, n + 1):

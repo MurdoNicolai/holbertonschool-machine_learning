@@ -26,6 +26,7 @@ def brevity_penalty(candidate_length, reference_lengths):
 
 def ngram_bleu(references, sentence, n):
     '''calculates the n-gram BLEU score for a sentence'''
+    n-=1
     reference_counts = [count_ngrams(ref, n) for ref in references]
     candidate_counts = count_ngrams(sentence, n)
 
