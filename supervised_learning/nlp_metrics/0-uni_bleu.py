@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-'''contains uni blue function'''
 from collections import Counter
 import math
 
@@ -13,7 +12,12 @@ def count_ngrams(tokens, n):
 
 def uni_bleu(references, sentence):
     '''calculates the unigram BLEU score for a sentence'''
-    reference_counts = count_ngrams(references, 1)
+    # Count unigrams in reference translations
+    reference_counts = Counter()
+    for ref in references:
+        reference_counts.update(count_ngrams(ref, 1))
+
+    # Count unigrams in the candidate sentence
     candidate_counts = count_ngrams(sentence, 1)
 
     # Calculate precision

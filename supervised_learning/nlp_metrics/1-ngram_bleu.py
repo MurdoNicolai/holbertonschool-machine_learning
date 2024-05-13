@@ -29,7 +29,7 @@ def ngram_bleu(references, sentence, n):
     candidate_counts = count_ngrams(sentence, n)
 
     # Calculate precision
-    total_precision = ngram_precision(candidate_counts, reference_counts[0])
+    total_precision = ngram_precision(candidate_counts, sum(reference_counts, Counter()))
 
     # Calculate brevity penalty
     reference_lengths = [len(ref) for ref in references]
