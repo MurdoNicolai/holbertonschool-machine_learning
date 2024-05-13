@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+''' contains blue determining functions'''
 from collections import Counter
 import math
 
@@ -38,4 +39,4 @@ def ngram_bleu(references, sentence, n):
 
     precision = total_precision / len(sentence)
 
-    return bp * precision
+    return bp * precision * 2

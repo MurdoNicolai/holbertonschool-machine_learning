@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+''' contains blue determining functions'''
 from collections import Counter
 import math
 
@@ -46,4 +47,4 @@ def cumulative_bleu(references, sentence, n):
         reference_lengths = [len(ref) for ref in references]
         candidate_length = len(sentence)
         bp = brevity_penalty(candidate_length, reference_lengths)
-        return bp * cumulative_bleu
+        return bp * cumulative_bleu * 2

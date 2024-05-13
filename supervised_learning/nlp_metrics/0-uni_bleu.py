@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+''' contains blue determining functions'''
 from collections import Counter
 import math
 
