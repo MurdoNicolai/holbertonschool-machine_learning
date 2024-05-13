@@ -21,7 +21,7 @@ def pca(X, ndim):
     sorted_eigenvectors = eigenvectors[:, sorted_indices]
 
     # Select the top 'ndim' eigenvectors
-    top_eigenvectors = sorted_eigenvectors[:, :ndim]
+    top_eigenvectors = -sorted_eigenvectors[:, :ndim]
 
     # Project the data onto the new subspace
     transformed_data = np.dot(centered_data, top_eigenvectors)
