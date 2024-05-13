@@ -26,4 +26,4 @@ def pca(X, ndim):
     # Project the data onto the new subspace
     transformed_data = np.dot(centered_data, top_eigenvectors)
 
-    return np.real(transformed_data)
+    return transformed_data
