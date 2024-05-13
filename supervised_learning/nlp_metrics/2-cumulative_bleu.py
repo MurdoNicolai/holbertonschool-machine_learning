@@ -47,4 +47,4 @@ def cumulative_bleu(references, sentence, n):
         reference_lengths = [len(ref) for ref in references]
         candidate_length = len(sentence)
         bp = brevity_penalty(candidate_length, reference_lengths)
-        return bp * cumulative_bleu * 2
+        return bp * cumulative_bleu

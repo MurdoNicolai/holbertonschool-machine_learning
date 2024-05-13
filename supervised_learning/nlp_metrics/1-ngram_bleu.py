@@ -39,4 +39,4 @@ def ngram_bleu(references, sentence, n):
 
     precision = total_precision / len(sentence)
 
-    return bp * precision * 2
+    return bp * precision
