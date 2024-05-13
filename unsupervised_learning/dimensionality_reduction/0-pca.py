@@ -22,4 +22,5 @@ def pca(X, var=0.95):
 
     W = -eigenvectors[:, :num_components]
 
-    return W
+    return np.real(W)
+
