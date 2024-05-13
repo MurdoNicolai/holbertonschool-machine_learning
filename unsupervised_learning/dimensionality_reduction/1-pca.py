@@ -2,6 +2,7 @@
 """contains PCA functions"""
 import numpy as np
 
+
 def pca(X, ndim):
     '''Performs PCA on a dataset'''
     # Calculate the mean of each feature

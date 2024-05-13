@@ -26,4 +26,3 @@ def pca(X, var=0.95):
     W[:, 2] = eigenvectors[:, 2]
 
     return np.real(W)
-
