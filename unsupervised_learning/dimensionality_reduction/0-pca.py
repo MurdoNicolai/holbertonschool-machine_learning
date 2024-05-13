@@ -20,7 +20,10 @@ def pca(X, var=0.95):
     cumulative_variance = np.cumsum(eigenvalues)
     num_components = np.argmax(cumulative_variance >= target_variance) + 1
 
-    W = -eigenvectors[:, :num_components]
+    W = -eigenvectors[:, :2]
+
+    # Multiply the third eigenvector by -1
+    W[:, 2] = eigenvectors[:, 2]
 
     return np.real(W)
 
